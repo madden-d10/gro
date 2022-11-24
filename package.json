@@ -1,0 +1,22 @@
+{
+  "name": "gro",
+  "version": "1.0.0",
+  "description": "A garden assitance app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/madden-d10/gro.git"
+  },
+  "author": "Darragh Madden",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/madden-d10/gro/issues"
+  },
+  "homepage": "https://github.com/madden-d10/gro#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
