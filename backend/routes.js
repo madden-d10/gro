@@ -2,6 +2,10 @@ const express = require('express');
 const router = express.Router()
 const Model = require('./model');
 
+router.get('/', async (req, res) => {
+    res.send('Hello world')
+})
+
 //Post Method
 router.post('/plants', async (req, res) => {
     const data = new Model({
