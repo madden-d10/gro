@@ -1,14 +1,15 @@
 const express = require('express');
 const router = express.Router()
-const Model = require('./model');
+const plantModel = require('./plantModel');
+const userModel = require('./userModel')
 
 router.get('/', async (req, res) => {
     res.send('Hello world')
 })
 
-//Post Method
+// Create new plant
 router.post('/api/plants', async (req, res) => {
-    const data = new Model({
+    const data = new plantModel({
         name: req.body.name
     })
 
@@ -21,10 +22,33 @@ router.post('/api/plants', async (req, res) => {
     }
 })
 
-//Get all Method
+// Get all plants
 router.get('/api/plants', async (req, res) => {
     try{
-        const data = await Model.find();
+        const data = await plantModel.find();
+        res.json(data)
+    }
+    catch(error){
+        res.status(500).json({message: error.message})
+    }
+})
+
+// Get all users
+router.get('/api/users', async (req, res) => {
+    try{
+        const data = await userModel.find();
+        res.json(data)
+    }
+    catch(error){
+        res.status(500).json({message: error.message})
+    }
+})
+
+// Get one user
+router.get('/api/users/:username', async (req, res) => {
+    const username = req.params.username
+    try{
+        const data = await userModel.find({username: username});
         res.json(data)
     }
     catch(error){

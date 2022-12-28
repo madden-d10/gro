@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const dataSchema = new mongoose.Schema({
+const plantSchema = new mongoose.Schema({
     group: { type: String },
     name: { type: String },
     url: { type: String },
@@ -27,4 +27,4 @@ const dataSchema = new mongoose.Schema({
     fruit: { type: String }
 })
 
-module.exports = mongoose.model('plants', dataSchema)
+module.exports = mongoose.model('plants', plantSchema)
