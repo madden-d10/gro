@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import GardenSpace from './GardenSpace';
+import '../styles/GardenGrid.css'
 
 function GardenGrid() {
     const [spaces, setSpaces] = useState([
