@@ -7,7 +7,7 @@ router.get('/', async (req, res) => {
 })
 
 //Post Method
-router.post('/plants', async (req, res) => {
+router.post('/api/plants', async (req, res) => {
     const data = new Model({
         name: req.body.name
     })
@@ -22,7 +22,7 @@ router.post('/plants', async (req, res) => {
 })
 
 //Get all Method
-router.get('/plants', async (req, res) => {
+router.get('/api/plants', async (req, res) => {
     try{
         const data = await Model.find();
         res.json(data)
@@ -33,17 +33,17 @@ router.get('/plants', async (req, res) => {
 })
 
 //Get by ID Method
-router.get('/plants/:id', (req, res) => {
+router.get('/api/plants/:id', (req, res) => {
     res.send('Get by ID API')
 })
 
 //Update by ID Method
-router.patch('/plants/:id', (req, res) => {
+router.patch('/api/plants/:id', (req, res) => {
     res.send('Update by ID API')
 })
 
 //Delete by ID Method
-router.delete('/plants/:id', (req, res) => {
+router.delete('/api/plants/:id', (req, res) => {
     res.send('Delete by ID API')
 })
 
