@@ -79,10 +79,10 @@ function GardenGrid() {
   };
 
   const makeSpaces = () => {
-    return userInfo.layout?.map(space => (
+    return userInfo.layout?.map((space, i) => (
       <GardenSpace
         space={space}
-        key={space.id}
+        key={i}
         draggable="true"
         onDragStart={handleDragStart}
         onDragOver={handleDragOver}
