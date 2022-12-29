@@ -1,4 +1,5 @@
 const express = require('express')
+const bodyParser = require('body-parser')
 const app = express()
 const port = 9000
 const mongoose = require('mongoose');
@@ -7,6 +8,8 @@ const cors = require("cors");
 
 app.use(cors())
 app.use('/gro', routes)
+app.use(bodyParser.urlencoded())
+app.use(bodyParser.json())
 app.use(express.json());
 
 url = 'mongodb://127.0.0.1:27017/plantDB'

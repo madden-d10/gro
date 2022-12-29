@@ -2,6 +2,10 @@ const express = require('express');
 const router = express.Router()
 const plantModel = require('./plantModel');
 const userModel = require('./userModel')
+const bodyParser = require('body-parser')
+
+const urlEncodedParser = bodyParser.urlencoded({ extended: false })
+const jsonParser = bodyParser.json()
 
 router.get('/', async (req, res) => {
     res.send('Hello world')
@@ -49,6 +53,18 @@ router.get('/api/users/:username', async (req, res) => {
     const username = req.params.username
     try{
         const data = await userModel.find({username: username});
+        res.json(data)
+    }
+    catch(error){
+        res.status(500).json({message: error.message})
+    }
+})
+
+// Update one user
+router.put('/api/users/:username', jsonParser, async (req, res) => {
+    const username = req.params.username
+    try{
+        const data = await userModel.updateOne({username: username}, {layout: req.body});
         res.json(data)
     }
     catch(error){

@@ -3,17 +3,28 @@ import GardenSpace from './GardenSpace';
 import '../styles/GardenGrid.css'
 
 function GardenGrid() {
-    const [spaces, setSpaces] = useState([
-      { id: 1, name: "BOX1", color: "red" },
-      { id: 2, name: "BOX2", color: "green" },
-      { id: 3, name: "BOX3", color: "blue" },
-      { id: 4, name: "BOX4", color: "orange" },
-      { id: 5, name: "BOX5", color: "pink" },
-      { id: 6, name: "BOX6", color: "yellow" }
-    ])
+    const [userInfo, setUserInfo] = useState({layout: []});
+        
+    useEffect(() => {
+        fetch("http://localhost:9000/gro/api/users/user1")
+        .then(res => res.json())
+        .then(res => setUserInfo(res[0]))
+        .catch(err => err);
+    }, [])
+
+  const updateLayout = (newLayout) => {
+    const requestOptions = {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newLayout)
+    };
+
+    fetch('http://localhost:9000/gro/api/users/user1', requestOptions)
+      .then(response => response.json())
+  }
 
   const swapSpaces = (fromSpace, toSpace) => {
-    let slicedSpaces = spaces.slice();
+    let slicedSpaces = userInfo.layout.slice();
     let fromIndex = -1;
     let toIndex = -1;
 
@@ -33,9 +44,11 @@ function GardenGrid() {
       slicedSpaces[fromIndex] = { id: fromSpace.id, ...toRest };
       slicedSpaces[toIndex] = { id: toSpace.id, ...fromRest };
 
-      setSpaces(slicedSpaces);
-    }
-  };
+      setUserInfo({layout: slicedSpaces});
+      updateLayout(slicedSpaces)
+    };
+  }
+
 
   /* The dragstart event is fired when the user starts dragging an element or text selection */
   /* event.target is the source element : that is dragged */
@@ -66,7 +79,7 @@ function GardenGrid() {
   };
 
   const makeSpaces = () => {
-    return spaces.map(space => (
+    return userInfo.layout?.map(space => (
       <GardenSpace
         space={space}
         key={space.id}
