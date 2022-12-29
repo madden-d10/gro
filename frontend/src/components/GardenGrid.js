@@ -6,7 +6,9 @@ import '../styles/GardenGrid.css';
 function GardenGrid() {
     const [userInfo, setUserInfo] = useState({});
     const [plants, setPlants] = useState([]);
-    const [showModal, setShowModal] = useState(false)      
+    const [showModal, setShowModal] = useState(false)
+    const [selectedPlant, setSelectedPlant] = useState({})
+    const [spaceIndex, setSpaceIndex] = useState(0)
         
     useEffect(() => {
         fetch("http://localhost:9000/gro/api/users/user1")
@@ -88,29 +90,44 @@ function GardenGrid() {
     return false;
   };
 
-  const handleClick = () => {
+  const handleClick = (i) => {
+    setSpaceIndex(i)
     setShowModal(true);
   }
     
-  const handleCloseModal = () => setShowModal(false);
+  const handleCloseModal = () => {
+    let items = userInfo.layout;
+    // 2. Make a shallow copy of the item you want to mutate
+    let item = {...items[spaceIndex]};
+    // 3. Replace the property you're intested in
+    item = selectedPlant;
+    // 4. Put it back into our array. N.B. we *are* mutating the array here, 
+    //    but that's why we made a copy first
+    items[spaceIndex] = item;
+    // 5. Set the state to our new copy
+    setUserInfo({layout: items});
+    setShowModal(false);
+    updateLayout(items)
+  }
 
   const renderSpaces = () => {
     return userInfo.layout?.map((space, i) => (
       <GardenSpace
         space={space}
+        id={i}
         key={i}
         draggable="true"
         onDragStart={handleDragStart}
         onDragOver={handleDragOver}
         onDrop={handleDrop}
-        onClick={handleClick}
+        onClick={() => handleClick(i)}
       />
     ));
   };
 
   const renderPlantsList = () => {
     return plants.map((plant, i) => (
-      <p key={i}>{plant.name}</p>
+      <p key={i} onClick={() => setSelectedPlant(plant)}>{plant.name}</p>
     ));
   };
 
