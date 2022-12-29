@@ -1,15 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import GardenSpace from './GardenSpace';
-import '../styles/GardenGrid.css'
+import ReactModal from 'react-modal';
+import '../styles/GardenGrid.css';
 
 function GardenGrid() {
-    const [userInfo, setUserInfo] = useState({layout: []});
+    const [userInfo, setUserInfo] = useState({});
+    const [plants, setPlants] = useState([]);
+    const [showModal, setShowModal] = useState(false)      
         
     useEffect(() => {
         fetch("http://localhost:9000/gro/api/users/user1")
         .then(res => res.json())
         .then(res => setUserInfo(res[0]))
         .catch(err => err);
+
+        fetch("http://localhost:9000/gro/api/plants")
+        .then(res => res.json()) 
+        .then(res => setPlants(res))
+        .catch(err => err);
+
+        ReactModal.setAppElement('body')
     }, [])
 
   const updateLayout = (newLayout) => {
@@ -78,7 +88,13 @@ function GardenGrid() {
     return false;
   };
 
-  const makeSpaces = () => {
+  const handleClick = () => {
+    setShowModal(true);
+  }
+    
+  const handleCloseModal = () => setShowModal(false);
+
+  const renderSpaces = () => {
     return userInfo.layout?.map((space, i) => (
       <GardenSpace
         space={space}
@@ -87,13 +103,28 @@ function GardenGrid() {
         onDragStart={handleDragStart}
         onDragOver={handleDragOver}
         onDrop={handleDrop}
+        onClick={handleClick}
       />
     ));
   };
 
-  return <div className="GardenGrid">{makeSpaces()}</div>;
-}
+  const renderPlantsList = () => {
+    return plants.map((plant, i) => (
+      <p key={i}>{plant.name}</p>
+    ));
+  };
 
-// ReactDOM.render(<GardenGrid />, document.getElementById("app"));
+  return (
+    <div className="GardenGrid">
+      {renderSpaces()}
+      <div>
+        <ReactModal isOpen={showModal} contentLabel="Minimal Modal Example">
+          <button onClick={handleCloseModal}>Close Modal</button>
+          {renderPlantsList()}
+        </ReactModal>
+      </div>
+    </div>
+  )
+}
 
 export default GardenGrid;

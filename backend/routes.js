@@ -37,6 +37,18 @@ router.get('/api/plants', async (req, res) => {
     }
 })
 
+// Get one plant
+router.get('/api/plants/:id', async (req, res) => {
+    const id = req.params.id
+    try{
+        const data = await plantModel.find({ '_id': id });
+        res.json(data)
+    }
+    catch(error){
+        res.status(500).json({message: error.message})
+    }
+})
+
 // Get all users
 router.get('/api/users', async (req, res) => {
     try{
