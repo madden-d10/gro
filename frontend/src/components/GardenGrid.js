@@ -12,7 +12,7 @@ function GardenGrid() {
     const [spaceIndex, setSpaceIndex] = useState(0)
         
     useEffect(() => {
-        fetch("http://localhost:9000/gro/api/users/user1")
+        fetch("http://localhost:9000/gro/api/users/user2")
         .then(res => res.json())
         .then(res => setUserInfo(res[0]))
         .catch(err => err);
@@ -32,7 +32,7 @@ function GardenGrid() {
       body: JSON.stringify(newLayout)
     };
 
-    fetch('http://localhost:9000/gro/api/users/user1', requestOptions)
+    fetch('http://localhost:9000/gro/api/users/user2', requestOptions)
       .then(response => response.json())
   }
 
@@ -67,7 +67,6 @@ function GardenGrid() {
       updateLayout(slicedRows)
     };
   }
-
 
   /* The dragstart event is fired when the user starts dragging an element or text selection */
   /* event.target is the source element : that is dragged */
@@ -115,6 +114,7 @@ function GardenGrid() {
     if(items[rowIndex][spaceIndex] !== item) {
       // 5. Set the state to our new copy
       item.id = `${rowIndex}${spaceIndex}`
+      item.isUsed = true
       items[rowIndex][spaceIndex] = item;
       setUserInfo({layout: items});
       updateLayout(items)
