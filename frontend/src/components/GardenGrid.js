@@ -8,6 +8,7 @@ function GardenGrid() {
     const [plants, setPlants] = useState([]);
     const [showModal, setShowModal] = useState(false)
     const [selectedPlant, setSelectedPlant] = useState({})
+    const [rowIndex, setRowIndex] = useState(0)
     const [spaceIndex, setSpaceIndex] = useState(0)
         
     useEffect(() => {
@@ -36,28 +37,34 @@ function GardenGrid() {
   }
 
   const swapSpaces = (fromSpace, toSpace) => {
-    let slicedSpaces = userInfo.layout.slice();
+    const fromRowID = fromSpace.id.charAt(0)
+    const fromSpaceID = fromSpace.id.charAt(1)
+    const toRowID = toSpace.id.charAt(0)
+    const toSpaceID = toSpace.id.charAt(1)
+
+    let slicedRows = userInfo.layout.slice();
     let fromIndex = -1;
     let toIndex = -1;
 
-    for (let i = 0; i < slicedSpaces.length; i++) {
-      if (slicedSpaces[i].id === fromSpace.id)
-       {
-        fromIndex = i;
-      }
-      if (slicedSpaces[i].id === toSpace.id) {
-        toIndex = i;
+    for (let i = 0; i < slicedRows.length; i++) {
+      for (let j = 0; j < slicedRows[i].length; j++) {
+        if (slicedRows[i][j].id === fromSpace.id) {
+          fromIndex = fromSpace.id;
+        }
+        if (slicedRows[i][j].id === toSpace.id) {
+          toIndex = toSpace.id;
+        }
       }
     }
 
-    if (fromIndex != -1 && toIndex != -1) {
-      let { fromId, ...fromRest } = slicedSpaces[fromIndex];
-      let { toId, ...toRest } = slicedSpaces[toIndex];
-      slicedSpaces[fromIndex] = { id: fromSpace.id, ...toRest };
-      slicedSpaces[toIndex] = { id: toSpace.id, ...fromRest };
+    if (fromIndex !== -1 && toIndex !== -1) {
+      let { id: fromId, ...fromRest } = slicedRows[parseInt(fromRowID)][parseInt(fromSpaceID)];
+      let { id: toId, ...toRest } = slicedRows[parseInt(toRowID)][parseInt(toSpaceID)];
+      slicedRows[parseInt(fromRowID)][parseInt(fromSpaceID)] = { id: fromSpace.id, ...toRest };
+      slicedRows[parseInt(toRowID)][parseInt(toSpaceID)] = { id: toSpace.id, ...fromRest };
 
-      setUserInfo({layout: slicedSpaces});
-      updateLayout(slicedSpaces)
+      setUserInfo({layout: slicedRows});
+      updateLayout(slicedRows)
     };
   }
 
@@ -90,8 +97,9 @@ function GardenGrid() {
     return false;
   };
 
-  const openModal = (space, i) => {
-    setSpaceIndex(i)
+  const openModal = (space, rowIndex, spaceIndex) => {
+    setRowIndex(rowIndex)
+    setSpaceIndex(spaceIndex)
     setSelectedPlant(space)
     setShowModal(true);
   }
@@ -99,15 +107,15 @@ function GardenGrid() {
   const closeModal = async () => {
     let items = userInfo.layout;
     // 2. Make a shallow copy of the item you want to mutate
-    let item = {...items[spaceIndex]};
+    let item = {...items[rowIndex][spaceIndex]};
     // 3. Replace the property you're intested in
     item = selectedPlant;
     // 4. Put it back into our array. N.B. we *are* mutating the array here, 
     //    but that's why we made a copy first
-    if(items[spaceIndex] !== item) {
+    if(items[rowIndex][spaceIndex] !== item) {
       // 5. Set the state to our new copy
-      item.id = spaceIndex
-      items[spaceIndex] = item;
+      item.id = `${rowIndex}${spaceIndex}`
+      items[rowIndex][spaceIndex] = item;
       setUserInfo({layout: items});
       updateLayout(items)
     }
@@ -116,17 +124,21 @@ function GardenGrid() {
   }
 
   const renderSpaces = () => {
-    return userInfo.layout?.map((space, i) => (
-      <GardenSpace
-        space={space}
-        id={i}
-        key={i}
-        draggable="true"
-        onDragStart={handleDragStart}
-        onDragOver={handleDragOver}
-        onDrop={handleDrop}
-        onClick={() => openModal(space, i)}
-      />
+    return userInfo.layout?.map((row, rowIndex) => (
+      <div className={`row${rowIndex}`} key={rowIndex}>
+        {row.map((space, spaceIndex) => (
+          <GardenSpace
+            space={space}
+            id={space.id || `${rowIndex}${spaceIndex}`}
+            key={space.id || `${rowIndex}${spaceIndex}`}
+            draggable="true"
+            onDragStart={handleDragStart}
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
+            onClick={() => openModal(space, rowIndex, spaceIndex)}
+          />
+        ))}
+      </div>
     ));
   };
 
