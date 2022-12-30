@@ -5,7 +5,7 @@ function GardenSpace(props)  {
     return (
         <div
             className="space"
-            style={{ backgroundColor: props.space.color || 'white' }}
+            style={{ backgroundColor: props.space.color}}
             draggable={props.draggable}
             onDragStart={props.onDragStart({ id: props.id })}
             onDragOver={props.onDragOver({ id: props.id })}

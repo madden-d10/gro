@@ -125,7 +125,7 @@ function GardenGrid() {
 
   const renderSpaces = () => {
     return userInfo.layout?.map((row, rowIndex) => (
-      <div className={`row${rowIndex}`} key={rowIndex}>
+      <div className={`row`} key={rowIndex}>
         {row.map((space, spaceIndex) => (
           <GardenSpace
             space={space}
