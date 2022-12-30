@@ -90,12 +90,13 @@ function GardenGrid() {
     return false;
   };
 
-  const handleClick = (i) => {
+  const openModal = (space, i) => {
     setSpaceIndex(i)
+    setSelectedPlant(space)
     setShowModal(true);
   }
     
-  const handleCloseModal = () => {
+  const closeModal = async () => {
     let items = userInfo.layout;
     // 2. Make a shallow copy of the item you want to mutate
     let item = {...items[spaceIndex]};
@@ -103,11 +104,15 @@ function GardenGrid() {
     item = selectedPlant;
     // 4. Put it back into our array. N.B. we *are* mutating the array here, 
     //    but that's why we made a copy first
-    items[spaceIndex] = item;
-    // 5. Set the state to our new copy
-    setUserInfo({layout: items});
+    if(items[spaceIndex] !== item) {
+      // 5. Set the state to our new copy
+      item.id = spaceIndex
+      items[spaceIndex] = item;
+      setUserInfo({layout: items});
+      updateLayout(items)
+    }
+
     setShowModal(false);
-    updateLayout(items)
   }
 
   const renderSpaces = () => {
@@ -120,7 +125,7 @@ function GardenGrid() {
         onDragStart={handleDragStart}
         onDragOver={handleDragOver}
         onDrop={handleDrop}
-        onClick={() => handleClick(i)}
+        onClick={() => openModal(space, i)}
       />
     ));
   };
@@ -136,7 +141,8 @@ function GardenGrid() {
       {renderSpaces()}
       <div>
         <ReactModal isOpen={showModal} contentLabel="Minimal Modal Example">
-          <button onClick={handleCloseModal}>Close Modal</button>
+          <button onClick={closeModal}>Close Modal</button>
+          <button onClick={() => setSelectedPlant({})}>Clear Space</button>
           {renderPlantsList()}
         </ReactModal>
       </div>
