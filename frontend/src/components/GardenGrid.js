@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import GardenSpace from './GardenSpace';
+import PlantSpace from './PlantSpace';
 import ReactModal from 'react-modal';
 import '../styles/GardenGrid.css';
 
@@ -142,9 +143,21 @@ function GardenGrid() {
     ));
   };
 
+  const handlePlantSelection = (plant, index) => {
+    setSelectedPlant(plant)
+    const plantItems = document.getElementsByClassName('plant-item')
+
+    for (let plantItem of plantItems) {
+      plantItem.style.backgroundColor = '#444'
+      if (plantItem.id === `plant-${index}`) {
+        plantItem.style.backgroundColor = 'green'
+      }
+    }
+  }
+
   const renderPlantsList = () => {
-    return plants.map((plant, i) => (
-      <p key={i} onClick={() => setSelectedPlant(plant)}>{plant.name}</p>
+    return plants.map((plant, index) => (
+      <PlantSpace key={index} index={index} plant={plant} onClick={() => handlePlantSelection(plant, index)} />
     ));
   };
 
@@ -155,7 +168,9 @@ function GardenGrid() {
         <ReactModal isOpen={showModal} contentLabel="Minimal Modal Example">
           <button onClick={closeModal}>Close Modal</button>
           <button onClick={() => setSelectedPlant({})}>Clear Space</button>
-          {renderPlantsList()}
+          <div className='modal-content'>
+            {renderPlantsList()}
+          </div>
         </ReactModal>
       </div>
     </div>
