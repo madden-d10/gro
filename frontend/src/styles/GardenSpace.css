@@ -14,8 +14,9 @@
 .empty-space {
     width: 120px;
     height: 120px;
-    padding: 10px; 
+    padding: 10px;
     margin: 5px;
+    background-color: rgb(199, 199, 199);
 }
 
 .space:hover {

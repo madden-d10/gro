@@ -1,9 +1,11 @@
 .GardenGrid {
     display: flex;
     flex-direction: column;
+    border: 10px solid rgb(199, 199, 199);
+    border-radius: 5px;
+    background-color: rgb(199, 199, 199);
 }
 
 .row {
     display: flex;
-    /* justify-content: space-around; */
 }

@@ -20,11 +20,7 @@ function GardenSpace(props)  {
         );
     } else {
         return (
-            <div
-            className="empty-space"
-            style={{ backgroundColor: 'white'}}
-            >
-        </div> 
+            <div className="empty-space"></div> 
         )
     }
 
