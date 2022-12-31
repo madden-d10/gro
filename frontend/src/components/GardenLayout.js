@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import GardenGrid from './GardenGrid';
 import GardenSetup from './GardenSetup'
+import '../styles/GardenLayout.css'
   
 function GardenLayout () {
     const [userInfo, setUserInfo] = useState({});

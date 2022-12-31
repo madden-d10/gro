@@ -14,14 +14,14 @@ function GardenSpace(props)  {
                 onClick={props.onClick}
                 >
                 <p className="content">
-                    {props.space.name || 'empty'}
+                    {props.space.name}
                 </p>
             </div>
         );
     } else {
         return (
             <div
-            className="space"
+            className="empty-space"
             style={{ backgroundColor: 'white'}}
             >
         </div> 
