@@ -129,8 +129,8 @@ function GardenGrid() {
         {row.map((space, spaceIndex) => (
           <GardenSpace
             space={space}
-            id={space.id || `${rowIndex}${spaceIndex}`}
-            key={space.id || `${rowIndex}${spaceIndex}`}
+            id={space.id}
+            key={space.id}
             draggable="true"
             onDragStart={handleDragStart}
             onDragOver={handleDragOver}

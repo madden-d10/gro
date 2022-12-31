@@ -71,36 +71,52 @@ function GardenGrid() {
         return [firstRowIndex, lastRowIndex]
     }
 
-  const updateLayout = (newLayout) => {
-    const [lowIndex, highIndex] = getSpaceIndexes(newLayout)
-
-    let i = 0
-    for (let row of newLayout) {
-        const newRow = row.filter((space, spaceIndex) => {
-            return (space.isUsed || (spaceIndex >= lowIndex && spaceIndex <= highIndex))
-        });
-
-        if (newRow.length === 0) {
-            newLayout.splice(i, 1);  
-        } else {
-            newLayout[i] = newRow;
+    const updateIDs = (newLayout) => {
+        let rowIndex = 0;
+        for (let row of newLayout) {
+            let spaceIndex = 0
+            for (let space of row) {
+                space.id = `${rowIndex}${spaceIndex}`
+                spaceIndex++
+            }
+            rowIndex++
         }
-        i++
+
+        return newLayout
     }
 
-    const [firstRowIndex, lastRowIndex] = getRowIndexes(newLayout)
+    const updateLayout = (newLayout) => {
+        const [lowIndex, highIndex] = getSpaceIndexes(newLayout)
 
-    newLayout = newLayout.splice(firstRowIndex, ((lastRowIndex - firstRowIndex) + 1));
+        let i = 0
+        for (let row of newLayout) {
+            const newRow = row.filter((space, spaceIndex) => {
+                return (space.isUsed || (spaceIndex >= lowIndex && spaceIndex <= highIndex))
+            });
 
-    const requestOptions = {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newLayout)
-    };
+            if (newRow.length === 0) {
+                newLayout.splice(i, 1);  
+            } else {
+                newLayout[i] = newRow;
+            }
+            i++
+        }
 
-    fetch('http://localhost:9000/gro/api/users/user2', requestOptions)
-      .then(response => response.json())
-  }
+        const [firstRowIndex, lastRowIndex] = getRowIndexes(newLayout)
+
+        newLayout = newLayout.splice(firstRowIndex, ((lastRowIndex - firstRowIndex) + 1));
+
+        newLayout = updateIDs(newLayout)
+
+        const requestOptions = {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newLayout)
+        };
+
+        fetch('http://localhost:9000/gro/api/users/user2', requestOptions)
+        .then(response => response.json())
+    }
 
     const handleClick = (rowIndex, spaceIndex) => {
         newGarden[rowIndex][spaceIndex].isUsed = !newGarden[rowIndex][spaceIndex].isUsed
