@@ -1,21 +1,9 @@
 .GardenGrid {
-    margin: 0 5rem;
     display: flex;
     flex-direction: column;
 }
 
 .row {
     display: flex;
-    justify-content: space-around;
-    margin: 10px 0;
-}
-  
-.space {
-    background-color: #444;
-    color: #fff;
-    border-radius: 5px;
-    padding: 20px;
-    font-size: 150%;
-    width: 100px;
-    height: 100px;
+    /* justify-content: space-around; */
 }

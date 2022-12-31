@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/GardenSpace.css'
 
 function GardenSpace(props)  {
     props.space.id = props.id
@@ -12,7 +13,9 @@ function GardenSpace(props)  {
                 onDrop={props.onDrop({ id: props.id })}
                 onClick={props.onClick}
                 >
-                <div className="content">{props.space.name || 'empty'}</div>
+                <p className="content">
+                    {props.space.name || 'empty'}
+                </p>
             </div>
         );
     } else {

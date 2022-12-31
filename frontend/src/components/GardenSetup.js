@@ -1,15 +1,16 @@
+import e from 'cors';
 import React, { useState, useEffect } from 'react';
-import '../styles/GardenGrid.css';
+import '../styles/GardenSetup.css';
 
 const newGarden = [
-    [{id: '00'}, {id: '01'}, {id: '02'}, {id: '03'}, {id: '04'}, {id: '05'}, {id: '06'}, {id: '07'}],
-    [{id: '10'}, {id: '11'}, {id: '12'}, {id: '13'}, {id: '14'}, {id: '15'}, {id: '16'}, {id: '17'}],
-    [{id: '20'}, {id: '21'}, {id: '22'}, {id: '23'}, {id: '24'}, {id: '25'}, {id: '26'}, {id: '27'}],
-    [{id: '30'}, {id: '31'}, {id: '32'}, {id: '33'}, {id: '34'}, {id: '35'}, {id: '36'}, {id: '37'}],
-    [{id: '40'}, {id: '41'}, {id: '42'}, {id: '43'}, {id: '44'}, {id: '45'}, {id: '46'}, {id: '47'}],
-    [{id: '50'}, {id: '51'}, {id: '52'}, {id: '53'}, {id: '54'}, {id: '55'}, {id: '56'}, {id: '57'}],
-    [{id: '60'}, {id: '61'}, {id: '62'}, {id: '63'}, {id: '64'}, {id: '65'}, {id: '66'}, {id: '67'}],
-    [{id: '70'}, {id: '71'}, {id: '72'}, {id: '73'}, {id: '74'}, {id: '75'}, {id: '76'}, {id: '77'}]
+    [{id: '00', isUsed: false}, {id: '01', isUsed: false}, {id: '02', isUsed: false}, {id: '03', isUsed: false}, {id: '04', isUsed: false}, {id: '05', isUsed: false}, {id: '06', isUsed: false}, {id: '07', isUsed: false}],
+    [{id: '10', isUsed: false}, {id: '11', isUsed: false}, {id: '12', isUsed: false}, {id: '13', isUsed: false}, {id: '14', isUsed: false}, {id: '15', isUsed: false}, {id: '16', isUsed: false}, {id: '17', isUsed: false}],
+    [{id: '20', isUsed: false}, {id: '21', isUsed: false}, {id: '22', isUsed: false}, {id: '23', isUsed: false}, {id: '24', isUsed: false}, {id: '25', isUsed: false}, {id: '26', isUsed: false}, {id: '27', isUsed: false}],
+    [{id: '30', isUsed: false}, {id: '31', isUsed: false}, {id: '32', isUsed: false}, {id: '33', isUsed: false}, {id: '34', isUsed: false}, {id: '35', isUsed: false}, {id: '36', isUsed: false}, {id: '37', isUsed: false}],
+    [{id: '40', isUsed: false}, {id: '41', isUsed: false}, {id: '42', isUsed: false}, {id: '43', isUsed: false}, {id: '44', isUsed: false}, {id: '45', isUsed: false}, {id: '46', isUsed: false}, {id: '47', isUsed: false}],
+    [{id: '50', isUsed: false}, {id: '51', isUsed: false}, {id: '52', isUsed: false}, {id: '53', isUsed: false}, {id: '54', isUsed: false}, {id: '55', isUsed: false}, {id: '56', isUsed: false}, {id: '57', isUsed: false}],
+    [{id: '60', isUsed: false}, {id: '61', isUsed: false}, {id: '62', isUsed: false}, {id: '63', isUsed: false}, {id: '64', isUsed: false}, {id: '65', isUsed: false}, {id: '66', isUsed: false}, {id: '67', isUsed: false}],
+    [{id: '70', isUsed: false}, {id: '71', isUsed: false}, {id: '72', isUsed: false}, {id: '73', isUsed: false}, {id: '74', isUsed: false}, {id: '75', isUsed: false}, {id: '76', isUsed: false}, {id: '77', isUsed: false}]
 ]
 
 
@@ -24,7 +25,73 @@ function GardenGrid() {
         .catch(err => err);
     }, [])
 
+    const getSpaceIndexes = (newLayout) => {
+        let lowIndex = 0;
+        let highIndex = 0;
+        let isFirstUsedSpaceFound = false
+        
+        for (let row of newLayout) {  
+            let currentIndex = 0; 
+            for (let space of row) {
+                if (isFirstUsedSpaceFound) {
+                    if (space.isUsed && currentIndex < lowIndex) {
+                        lowIndex = currentIndex
+                    }
+                } else {
+                    if (space.isUsed) {
+                        lowIndex = currentIndex
+                        isFirstUsedSpaceFound = true
+                    }
+                }
+                if (space.isUsed && currentIndex > highIndex) {
+                    highIndex = currentIndex
+                }
+                currentIndex++
+            }
+        }
+
+        return [lowIndex, highIndex]
+    }
+
+    const getRowIndexes = (newLayout) => {
+        let rowIndexes = []
+        let j = 0
+        for (let row of newLayout) {
+            for (let space of row) {
+                if (space.isUsed) {
+                    rowIndexes.push(j) 
+                    break;
+                }
+            }
+            j++
+        }
+        const firstRowIndex = rowIndexes[0]
+        const lastRowIndex = rowIndexes[rowIndexes.length -1]
+    
+        return [firstRowIndex, lastRowIndex]
+    }
+
   const updateLayout = (newLayout) => {
+    const [lowIndex, highIndex] = getSpaceIndexes(newLayout)
+
+    let i = 0
+    for (let row of newLayout) {
+        const newRow = row.filter((space, spaceIndex) => {
+            return (space.isUsed || (spaceIndex >= lowIndex && spaceIndex <= highIndex))
+        });
+
+        if (newRow.length === 0) {
+            newLayout.splice(i, 1);  
+        } else {
+            newLayout[i] = newRow;
+        }
+        i++
+    }
+
+    const [firstRowIndex, lastRowIndex] = getRowIndexes(newLayout)
+
+    newLayout = newLayout.splice(firstRowIndex, ((lastRowIndex - firstRowIndex) + 1));
+
     const requestOptions = {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
@@ -36,9 +103,13 @@ function GardenGrid() {
   }
 
     const handleClick = (rowIndex, spaceIndex) => {
-        newGarden[rowIndex][spaceIndex].isUsed = true
+        newGarden[rowIndex][spaceIndex].isUsed = !newGarden[rowIndex][spaceIndex].isUsed
         setGardenLayout(newGarden)
-        console.log(newGarden)
+        if (newGarden[rowIndex][spaceIndex].isUsed) {
+            document.getElementById(`${rowIndex}${spaceIndex}`).style.backgroundColor = 'green';
+        } else {
+            document.getElementById(`${rowIndex}${spaceIndex}`).style.backgroundColor = '#444';
+        }
     }
 
     const renderSpaces = () => {
@@ -48,9 +119,9 @@ function GardenGrid() {
             <div
                 id={`${rowIndex}${spaceIndex}`}
                 key={`${rowIndex}${spaceIndex}`}
+                className={'setup-space'}
                 onClick={() => handleClick(rowIndex, spaceIndex)}
             >
-            X
             </div>
             ))}
         </div>
