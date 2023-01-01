@@ -2,13 +2,15 @@
     background-color: #444;
     color: #fff;
     border-radius: 5px;
-    padding: 10px;
     font-size: 1rem;
-    width: 120px;
-    height: 120px;
+    width: 140px;
+    height: 140px;
     background-size: cover;
     margin: 5px;
-    cursor: pointer;    
+    cursor: pointer;
+    font-size: 12px;
+    display: flex;
+    align-items: flex-end;
 }
 
 .empty-space {
@@ -21,4 +23,15 @@
 
 .space:hover {
     background-color: rgb(44, 44, 44);
+}
+
+.text-container {
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+    background-image: linear-gradient(180deg, rgb(255, 255, 255, 0), rgb(31, 31, 31));   
+}
+
+p {
+    margin: 0;
 }

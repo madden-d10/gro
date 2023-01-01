@@ -3,7 +3,14 @@ import '../styles/GardenSpace.css'
 
 function GardenSpace(props)  {
     props.space.id = props.id
-    if (props.space?.isUsed) {
+    const nameWithoutBrackets = props.space.name?.replace(/ *\([^)]*\) */g, "")
+    let backgroundImageURL = ''
+
+    if (props.space.name) {
+        backgroundImageURL = '/images/26bf40a603.jpg'
+    }
+
+    if (props.space?.isUsed ) {
         return (
             <div
                 className="space"
@@ -12,10 +19,13 @@ function GardenSpace(props)  {
                 onDragOver={props.onDragOver({ id: props.id })}
                 onDrop={props.onDrop({ id: props.id })}
                 onClick={props.onClick}
+                style={{backgroundImage: `url('${backgroundImageURL}')`}}
                 >
-                <p className="content">
-                    {props.space.name}
-                </p>
+                <div className='text-container'>
+                    <p className="content">
+                        {nameWithoutBrackets}
+                    </p>
+                </div>
             </div>
         );
     } else {
