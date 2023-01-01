@@ -7,7 +7,7 @@ function GardenSpace(props)  {
     let backgroundImageURL = ''
 
     if (props.space.name) {
-        backgroundImageURL = '/images/26bf40a603.jpg'
+        backgroundImageURL = `/images/${props.space.name.replace(/'/g, "")}/0 ${props.space.name.replace(/'/g, "")}.jpg`
     }
 
     if (props.space?.isUsed ) {
