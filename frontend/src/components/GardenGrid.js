@@ -74,6 +74,7 @@ function GardenGrid() {
   /* Firefox requires calling dataTransfer.setData for the drag to properly work */
   const handleDragStart = data => event => {
     let fromSpace = JSON.stringify({ id: data.id });
+    event.dataTransfer.effectAllowed = "move";
     event.dataTransfer.setData("dragContent", fromSpace);
   };
 
