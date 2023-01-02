@@ -166,8 +166,10 @@ function GardenGrid() {
       {renderSpaces()}
       <div>
         <ReactModal isOpen={showModal} contentLabel="Minimal Modal Example">
-          <button onClick={closeModal}>Close Modal</button>
-          <button onClick={() => setSelectedPlant({})}>Clear Space</button>
+          <div className='button-container'>
+            <button onClick={closeModal}>Close Modal</button>
+            <button onClick={() => setSelectedPlant({})}>Clear Space</button>
+          </div>
           <div className='modal-content'>
             {renderPlantsList()}
           </div>

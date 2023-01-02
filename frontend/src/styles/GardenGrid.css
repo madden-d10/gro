@@ -10,8 +10,23 @@
     display: flex;
 }
 
+.ReactModal__Content--after-open {
+    box-shadow: 10px 10px 30px #444;
+}
+
 .modal-content {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+}
+
+.button-container {
+    position: fixed;
+    top: 4rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.button-container button {
+    margin: 10px 0;
 }
