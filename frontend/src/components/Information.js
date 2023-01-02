@@ -13,7 +13,6 @@ function Information (){
     return (
         <div id='information-wrapper'>
             <h1>Information page</h1>
-            <p>{plantInfo.apiResponse}</p>
         </div>
     );
 }
