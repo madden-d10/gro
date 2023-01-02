@@ -1,9 +1,9 @@
 .GardenGrid {
     display: flex;
     flex-direction: column;
-    border: 10px solid rgb(199, 199, 199);
+    border: 10px solid rgb(234, 234, 234);
     border-radius: 5px;
-    background-color: rgb(199, 199, 199);
+    background-color: rgb(234, 234, 234);
 }
 
 .row {
