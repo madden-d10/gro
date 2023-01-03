@@ -1,4 +1,4 @@
-[
+const gardenersWorldLinksArray = [
   "https://www.gardenersworld.com/how-to/grow-plants/how-to-grow-phlomis/",
   "https://www.gardenersworld.com/grow-plants/pleached-trees/",
   "https://www.gardenersworld.com/how-to/grow-plants/calamondin-orange-tree/",
@@ -1405,3 +1405,5 @@
   "https://www.gardenersworld.com/how-to/grow-plants/purple-roses/",
   "https://www.gardenersworld.com/how-to/grow-plants/plant-families-solanaceae/"
 ]
+
+module.exports = gardenersWorldLinksArray
