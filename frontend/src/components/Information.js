@@ -41,8 +41,16 @@ function Information (){
                     .replace('/', '')
                     .replaceAll('-', ' ')}
                 </a>
+                <button onClick={() => test(link.replace('https://www.gardenersworld.com/', '').replaceAll('/', '_'))}>Get Tips</button>
             </div>
         ))
+    }
+
+    function test(endOfURL) {
+        fetch(`http://localhost:9000/gro/api/tip/${endOfURL}`)
+        .then(res => res.json())
+        .then(res => console.log(res))
+        .catch(err => err);
     }
 
     return (

@@ -3,6 +3,7 @@ const router = express.Router()
 const plantModel = require('./plantModel');
 const userModel = require('./userModel')
 const bodyParser = require('body-parser')
+const doSomething = require('./gardeners world scraper/index')
 
 const urlEncodedParser = bodyParser.urlencoded({ extended: false })
 const jsonParser = bodyParser.json()
@@ -97,6 +98,18 @@ router.patch('/api/plants/:id', (req, res) => {
 //Delete by ID Method
 router.delete('/api/plants/:id', (req, res) => {
     res.send('Delete by ID API')
+})
+
+// Get tip
+router.get('/api/tip/:endOfURL', async (req, res) => {
+    const endOfURL = req.params.endOfURL.replaceAll('_', '/');
+    try{
+        const data = await doSomething(endOfURL);
+        res.json(data)
+    }
+    catch(error){
+        res.status(500).json({message: error.message})
+    }
 })
 
 module.exports = router;
