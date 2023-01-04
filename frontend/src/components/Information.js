@@ -14,23 +14,6 @@ function Information (){
         setLinks(applicableResults)
     }
 
-    // const capitalizeWord = (word) => {
-    //       const firstLetter = word.charAt(0).toUpperCase();
-    //       const rest = word.slice(1).toLowerCase();
-      
-    //       return firstLetter + rest;
-    //   }
-
-    // const formatLink = (link) => {
-    //     const x = link.replace('https://www.gardenersworld.com/how-to/grow-plants/', '')
-    //     .replace('/', '')
-    //     .replace('-', ' ')
-
-    //     const capitalizedWord = capitalizeWord(x)
-
-    //     return capitalizedWord
-    // }
-
     const renderLinks = () => {
         return links.map((link, index) => (
             <div key={index} className='search-result'>
