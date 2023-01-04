@@ -136,7 +136,7 @@ function GardenGrid() {
         <div className={`row`} key={rowIndex}>
             {row.map((space, spaceIndex) => (
             <div
-                id={`${rowIndex}${spaceIndex}`}
+                id={space.id}
                 key={`${rowIndex}${spaceIndex}`}
                 className={'setup-space'}
                 onClick={() => handleClick(rowIndex, spaceIndex)}
