@@ -38,15 +38,19 @@ function GardenGrid() {
   }
 
   const swapSpaces = (fromSpace, toSpace) => {
+    // breaks down id into the row and space sections
+    // an id of 45 will have rowID = 4 and spaceID = 5
     const fromRowID = fromSpace.id.charAt(0)
     const fromSpaceID = fromSpace.id.charAt(1)
     const toRowID = toSpace.id.charAt(0)
     const toSpaceID = toSpace.id.charAt(1)
 
+    // creates a shallow copy so the state can be updated later
     let slicedRows = userInfo.layout.slice();
     let fromIndex = -1;
     let toIndex = -1;
 
+    // finds the where the space is being moved from and where it will be dropped
     for (let i = 0; i < slicedRows.length; i++) {
       for (let j = 0; j < slicedRows[i].length; j++) {
         if (slicedRows[i][j].id === fromSpace.id) {
@@ -58,6 +62,7 @@ function GardenGrid() {
       }
     }
 
+    // switches the ids for the spaces being swapped
     if (fromIndex !== -1 && toIndex !== -1) {
       let { id: fromId, ...fromRest } = slicedRows[parseInt(fromRowID)][parseInt(fromSpaceID)];
       let { id: toId, ...toRest } = slicedRows[parseInt(toRowID)][parseInt(toSpaceID)];
@@ -69,25 +74,18 @@ function GardenGrid() {
     };
   }
 
-  /* The dragstart event is fired when the user starts dragging an element or text selection */
-  /* event.target is the source element : that is dragged */
-  /* Firefox requires calling dataTransfer.setData for the drag to properly work */
   const handleDragStart = data => event => {
     let fromSpace = JSON.stringify({ id: data.id });
     event.dataTransfer.effectAllowed = "move";
     event.dataTransfer.setData("dragContent", fromSpace);
   };
 
-  /* The dragover event is fired when an element or text selection is being dragged */
-  /* over a valid drop target (every few hundred milliseconds) */
-  /* The event is fired on the drop target(s) */
   const handleDragOver = data => event => {
-    event.preventDefault(); // Necessary. Allows us to drop.
+    // necessary, allows drop.
+    event.preventDefault();
     return false;
   };
 
-  /* Fired when an element or text selection is dropped on a valid drop target */
-  /* The event is fired on the drop target(s) */
   const handleDrop = data => event => {
     event.preventDefault();
 
@@ -107,14 +105,13 @@ function GardenGrid() {
     
   const closeModal = async () => {
     let items = userInfo.layout;
-    // 2. Make a shallow copy of the item you want to mutate
+    // make a shallow copy of the item
     let item = {...items[rowIndex][spaceIndex]};
-    // 3. Replace the property you're intested in
+    // replace the property
     item = selectedPlant;
-    // 4. Put it back into our array. N.B. we *are* mutating the array here, 
-    //    but that's why we made a copy first
+    // put it back into the array.
     if(items[rowIndex][spaceIndex] !== item) {
-      // 5. Set the state to our new copy
+      // set the state to the new copy
       item.id = `${rowIndex}${spaceIndex}`
       item.isUsed = true
       items[rowIndex][spaceIndex] = item;

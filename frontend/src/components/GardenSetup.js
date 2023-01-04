@@ -37,15 +37,20 @@ function GardenGrid() {
             for (let space of row) {
                 if (isFirstUsedSpaceFound) {
                     if (space.isUsed && currentIndex < lowIndex) {
+                        // set lowIndex to the currentIndex if:
+                        // 1. there is already a lowIndex set from a previous row (isFirstUsedSpaceFound === true)
+                        // 2. the current space is selected and has a lower index than the first space
                         lowIndex = currentIndex
                     }
                 } else {
                     if (space.isUsed) {
+                        // this sets the value of the lowIndex to the first space found
                         lowIndex = currentIndex
                         isFirstUsedSpaceFound = true
                     }
                 }
                 if (space.isUsed && currentIndex > highIndex) {
+                    // the high index is simply set to the index of the used space that is the highest (e.g. the space furthest to the right)
                     highIndex = currentIndex
                 }
                 currentIndex++
@@ -61,6 +66,7 @@ function GardenGrid() {
         for (let row of newLayout) {
             for (let space of row) {
                 if (space.isUsed) {
+                    // adds the index of each row being used
                     rowIndexes.push(j) 
                     break;
                 }
@@ -75,6 +81,9 @@ function GardenGrid() {
 
     const updateIDs = (newLayout) => {
         let rowIndex = 0;
+
+        // because some rows have been deleted, the ids need to be reset to match the spaces posistion
+        // This allows the drag and drop function to work later on
         for (let row of newLayout) {
             let spaceIndex = 0
             for (let space of row) {
@@ -106,6 +115,8 @@ function GardenGrid() {
 
         const [firstRowIndex, lastRowIndex] = getRowIndexes(newLayout)
 
+        // only adds all rows which contain spaces that are being used
+        // it also ensures any rows between those rows are included
         newLayout = newLayout.splice(firstRowIndex, ((lastRowIndex - firstRowIndex) + 1));
 
         newLayout = updateIDs(newLayout)
