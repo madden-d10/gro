@@ -4,8 +4,6 @@ const plantModel = require('./plantModel');
 const userModel = require('./userModel')
 const bodyParser = require('body-parser')
 const doSomething = require('./gardeners world scraper/index')
-
-const urlEncodedParser = bodyParser.urlencoded({ extended: false })
 const jsonParser = bodyParser.json()
 
 router.get('/', async (req, res) => {
