@@ -93,6 +93,11 @@ router.patch('/api/plants/:id', (req, res) => {
     res.send('Update by ID API')
 })
 
+//Delete by ID Method
+router.delete('/api/plants/:id', (req, res) => {
+    res.send('Delete by ID API')
+})
+
 // Get tip
 router.get('/api/tip/:endOfURL', async (req, res) => {
     const endOfURL = req.params.endOfURL.replaceAll('_', '/');
