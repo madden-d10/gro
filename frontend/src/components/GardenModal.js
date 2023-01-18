@@ -35,19 +35,19 @@ function GardenModal(props) {
   };
 
   return (
-        <ReactModal isOpen={props.showModal} contentLabel="Minimal Modal Example">
+        <ReactModal isOpen={props.showModal}>
           <div className='button-container'>
             <button onClick={props.closeModal}>Close Modal</button>
             <button onClick={props.clearSpace}>Clear Space</button>
           </div>
           <div className='modal-content'>
-          <div className='plant-area'>
-            {renderPlantsList()}
-          </div>
-          <div className='button-area'>
-            <button onClick={()=> changePage(-44)}>Prev</button>
-            <button onClick={()=> changePage(+44)}>Next</button>
-          </div>
+            <div className='plant-area'>
+                {renderPlantsList()}
+            </div>
+            <div className='button-area'>
+                <button onClick={()=> changePage(-44)}>Prev</button>
+                <button onClick={()=> changePage(+44)}>Next</button>
+            </div>
           </div>
         </ReactModal>
   )
