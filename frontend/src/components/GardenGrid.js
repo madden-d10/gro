@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import GardenSpace from './GardenSpace';
-import PlantSpace from './PlantSpace';
 import GardenModal from './GardenModal'
 import '../styles/GardenGrid.css';
 
@@ -156,7 +155,6 @@ function GardenGrid() {
         <GardenModal
           showModal={showModal}
           closeModal={closeModal}
-          // renderPlantsList={renderPlantsList}
           clearSpace={clearSpace}
           handlePlantSelection={handlePlantSelection}>
         </GardenModal>
