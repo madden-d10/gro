@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import ReactModal from 'react-modal';
 import PlantSpace from './PlantSpace';
-import '../styles/GardenGrid.css';
+import '../styles/GardenModal.css';
 
-function GardenGrid(props) {
+function GardenModal(props) {
     const [plants, setPlants] = useState([]);
     const [plantStartIndex, setPlantStartIndex] = useState(0)
         
@@ -53,4 +53,4 @@ function GardenGrid(props) {
   )
 }
 
-export default GardenGrid;
+export default GardenModal;
