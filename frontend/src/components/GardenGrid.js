@@ -11,6 +11,7 @@ function GardenGrid() {
     const [selectedPlant, setSelectedPlant] = useState({})
     const [rowIndex, setRowIndex] = useState(0)
     const [spaceIndex, setSpaceIndex] = useState(0)
+    const [plantStartIndex, setPlantStartIndex] = useState(0)
         
     useEffect(() => {
         fetch("http://localhost:9000/gro/api/users/user2")
@@ -154,10 +155,22 @@ function GardenGrid() {
   }
 
   const renderPlantsList = () => {
-    return plants.map((plant, index) => (
+    const viewablePlants = plants.slice(plantStartIndex, plantStartIndex + 44)
+    return viewablePlants.map((plant, index) => (
       <PlantSpace key={index} index={index} plant={plant} onClick={() => handlePlantSelection(plant, index)} />
     ));
   };
+
+  const changePage = (num) => {
+    // because state is be one step behind at this stage, this variable is created twice
+    const viewablePlants = plants.slice(plantStartIndex + num, (plantStartIndex + num) + 44)
+
+    if ((plantStartIndex === 0 && num < 0) || viewablePlants.length <= 0) {
+      return
+    }
+
+    setPlantStartIndex(plantStartIndex + num)
+  }
 
   return (
     <div className="GardenGrid">
@@ -169,7 +182,13 @@ function GardenGrid() {
             <button onClick={() => setSelectedPlant({})}>Clear Space</button>
           </div>
           <div className='modal-content'>
+          <div className='plant-area'>
             {renderPlantsList()}
+          </div>
+          <div className='button-area'>
+            <button onClick={()=> changePage(-44)}>Previous</button>
+            <button onClick={()=> changePage(+44)}>Next</button>
+          </div>
           </div>
         </ReactModal>
       </div>

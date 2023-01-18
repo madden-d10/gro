@@ -14,10 +14,15 @@
     box-shadow: 10px 10px 30px #444;
 }
 
-.modal-content {
+.modal-content .plant-area {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+}
+
+.modal-content .button-area {
+    display: flex;
+    justify-content: space-between;
 }
 
 .button-container {
