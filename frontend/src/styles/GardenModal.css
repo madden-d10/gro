@@ -3,15 +3,16 @@
     box-shadow: 10px 10px 30px #444;
 }
 
-.modal-content .plant-area {
+.plant-area {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
 }
 
-.modal-content .button-area {
+.button-area {
     display: flex;
     justify-content: space-between;
+    margin: 0 8rem;
 }
 
 .button-container {

@@ -45,7 +45,7 @@ function GardenModal(props) {
             {renderPlantsList()}
           </div>
           <div className='button-area'>
-            <button onClick={()=> changePage(-44)}>Previous</button>
+            <button onClick={()=> changePage(-44)}>Prev</button>
             <button onClick={()=> changePage(+44)}>Next</button>
           </div>
           </div>
