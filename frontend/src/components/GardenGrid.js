@@ -1,30 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import GardenSpace from './GardenSpace';
 import PlantSpace from './PlantSpace';
-import ReactModal from 'react-modal';
+import GardenModal from './GardenModal'
 import '../styles/GardenGrid.css';
 
 function GardenGrid() {
     const [userInfo, setUserInfo] = useState({});
-    const [plants, setPlants] = useState([]);
     const [showModal, setShowModal] = useState(false)
     const [selectedPlant, setSelectedPlant] = useState({})
     const [rowIndex, setRowIndex] = useState(0)
     const [spaceIndex, setSpaceIndex] = useState(0)
-    const [plantStartIndex, setPlantStartIndex] = useState(0)
         
     useEffect(() => {
         fetch("http://localhost:9000/gro/api/users/user2")
         .then(res => res.json())
         .then(res => setUserInfo(res[0]))
         .catch(err => err);
-
-        fetch("http://localhost:9000/gro/api/plants")
-        .then(res => res.json()) 
-        .then(res => setPlants(res))
-        .catch(err => err);
-
-        ReactModal.setAppElement('body')
     }, [])
 
   const updateLayout = (newLayout) => {
@@ -103,7 +94,23 @@ function GardenGrid() {
     setSelectedPlant(space)
     setShowModal(true);
   }
-    
+
+  const handlePlantSelection = (plant, index) => {
+    setSelectedPlant(plant)
+    const plantItems = document.getElementsByClassName('plant-item')
+
+    for (let plantItem of plantItems) {
+      plantItem.style.backgroundColor = '#444'
+      if (plantItem.id === `plant-${index}`) {
+        plantItem.style.backgroundColor = 'green'
+      }
+    }
+  }
+
+  const clearSpace = () => {
+    setSelectedPlant({})
+  }
+
   const closeModal = async () => {
     let items = userInfo.layout;
     // make a shallow copy of the item
@@ -142,55 +149,17 @@ function GardenGrid() {
     ));
   };
 
-  const handlePlantSelection = (plant, index) => {
-    setSelectedPlant(plant)
-    const plantItems = document.getElementsByClassName('plant-item')
-
-    for (let plantItem of plantItems) {
-      plantItem.style.backgroundColor = '#444'
-      if (plantItem.id === `plant-${index}`) {
-        plantItem.style.backgroundColor = 'green'
-      }
-    }
-  }
-
-  const renderPlantsList = () => {
-    const viewablePlants = plants.slice(plantStartIndex, plantStartIndex + 44)
-    return viewablePlants.map((plant, index) => (
-      <PlantSpace key={index} index={index} plant={plant} onClick={() => handlePlantSelection(plant, index)} />
-    ));
-  };
-
-  const changePage = (num) => {
-    // because state is be one step behind at this stage, this variable is created twice
-    const viewablePlants = plants.slice(plantStartIndex + num, (plantStartIndex + num) + 44)
-
-    if ((plantStartIndex === 0 && num < 0) || viewablePlants.length <= 0) {
-      return
-    }
-
-    setPlantStartIndex(plantStartIndex + num)
-  }
-
   return (
     <div className="GardenGrid">
       {renderSpaces()}
       <div>
-        <ReactModal isOpen={showModal} contentLabel="Minimal Modal Example">
-          <div className='button-container'>
-            <button onClick={closeModal}>Close Modal</button>
-            <button onClick={() => setSelectedPlant({})}>Clear Space</button>
-          </div>
-          <div className='modal-content'>
-          <div className='plant-area'>
-            {renderPlantsList()}
-          </div>
-          <div className='button-area'>
-            <button onClick={()=> changePage(-44)}>Previous</button>
-            <button onClick={()=> changePage(+44)}>Next</button>
-          </div>
-          </div>
-        </ReactModal>
+        <GardenModal
+          showModal={showModal}
+          closeModal={closeModal}
+          // renderPlantsList={renderPlantsList}
+          clearSpace={clearSpace}
+          handlePlantSelection={handlePlantSelection}>
+        </GardenModal>
       </div>
     </div>
   )
