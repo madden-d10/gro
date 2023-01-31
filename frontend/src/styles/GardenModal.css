@@ -9,19 +9,24 @@
     justify-content: center;
 }
 
+.single-plant-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .button-area {
     display: flex;
     justify-content: space-between;
     margin: 0 8rem;
 }
 
-.button-container {
-    position: fixed;
-    top: 4rem;
-    display: flex;
-    flex-direction: column;
+button {
+    width: 4rem;
+    height: 2rem;
 }
 
-.button-container button {
+.close-button {
     margin: 10px 0;
 }

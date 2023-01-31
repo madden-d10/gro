@@ -4,18 +4,18 @@ import GardenModal from './GardenModal'
 import '../styles/GardenGrid.css';
 
 function GardenGrid() {
-    const [userInfo, setUserInfo] = useState({});
-    const [showModal, setShowModal] = useState(false)
-    const [selectedPlant, setSelectedPlant] = useState({})
-    const [rowIndex, setRowIndex] = useState(0)
-    const [spaceIndex, setSpaceIndex] = useState(0)
-        
-    useEffect(() => {
-        fetch("http://localhost:9000/gro/api/users/user2")
-        .then(res => res.json())
-        .then(res => setUserInfo(res[0]))
-        .catch(err => err);
-    }, [])
+  const [userInfo, setUserInfo] = useState({});
+  const [showModal, setShowModal] = useState(false)
+  const [selectedPlant, setSelectedPlant] = useState({})
+  const [rowIndex, setRowIndex] = useState(0)
+  const [spaceIndex, setSpaceIndex] = useState(0)
+      
+  useEffect(() => {
+      fetch("http://localhost:9000/gro/api/users/user2")
+      .then(res => res.json())
+      .then(res => setUserInfo(res[0]))
+      .catch(err => err);
+  }, [])
 
   const updateLayout = (newLayout) => {
     const requestOptions = {
@@ -94,16 +94,8 @@ function GardenGrid() {
     setShowModal(true);
   }
 
-  const handlePlantSelection = (plant, index) => {
+  const handlePlantSelection = (plant) => {
     setSelectedPlant(plant)
-    const plantItems = document.getElementsByClassName('plant-item')
-
-    for (let plantItem of plantItems) {
-      plantItem.style.backgroundColor = '#444'
-      if (plantItem.id === `plant-${index}`) {
-        plantItem.style.backgroundColor = 'green'
-      }
-    }
   }
 
   const clearSpace = () => {
@@ -154,6 +146,7 @@ function GardenGrid() {
       <div>
         <GardenModal
           showModal={showModal}
+          selectedPlant={selectedPlant}
           closeModal={closeModal}
           clearSpace={clearSpace}
           handlePlantSelection={handlePlantSelection}>
