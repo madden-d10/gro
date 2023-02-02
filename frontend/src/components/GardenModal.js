@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactModal from 'react-modal';
 import PlantSpace from './PlantSpace';
+import Information from './Information';
 import '../styles/GardenModal.css';
 
 function GardenModal(props) {
@@ -53,10 +54,14 @@ function GardenModal(props) {
 
   const renderSelectedPlant = () => {
     return (
-      <div className='single-plant-area'>
-        <PlantSpace plant={props.selectedPlant} />
-        <button onClick={props.clearSpace}>Clear</button>
+      <div>
+        <div className='single-plant-area'>
+          <PlantSpace plant={props.selectedPlant} />
+          <button onClick={props.clearSpace}>Clear</button>
+        </div>      
+        <Information />
       </div>
+
     )
   }
 

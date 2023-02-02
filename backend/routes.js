@@ -89,8 +89,15 @@ router.get('/api/plants/:id', (req, res) => {
 })
 
 //Update by ID Method
-router.patch('/api/plants/:id', (req, res) => {
-    res.send('Update by ID API')
+router.put('/api/plants/:id', async (req, res) => {
+    const id = req.params.id
+    try{
+        const data = await plantModel.updateOne({id: id}, {userNotes: req.body});
+        res.json(data)
+    }
+    catch(error){
+        res.status(500).json({message: error.message})
+    }
 })
 
 //Delete by ID Method

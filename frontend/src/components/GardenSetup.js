@@ -14,7 +14,6 @@ const newGarden = [
     [{id: '90', isUsed: false}, {id: '91', isUsed: false}, {id: '92', isUsed: false}, {id: '93', isUsed: false}, {id: '94', isUsed: false}, {id: '95', isUsed: false}, {id: '96', isUsed: false}, {id: '97', isUsed: false}, {id: '98', isUsed: false}, {id: '99', isUsed: false}]
 ]
 
-
 function GardenSetup() {
     // const [userInfo, setUserInfo] = useState({});
     const [gardenLayout, setGardenLayout] = useState(newGarden);

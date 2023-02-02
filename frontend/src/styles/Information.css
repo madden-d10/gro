@@ -14,3 +14,8 @@ p {
 a {
     margin: 10px;
 }
+
+.returned-information:hover {
+    background-color: goldenrod;
+    cursor: pointer;
+}
