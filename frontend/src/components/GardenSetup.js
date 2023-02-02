@@ -1,4 +1,3 @@
-import e from 'cors';
 import React, { useState, useEffect } from 'react';
 import '../styles/GardenSetup.css';
 
@@ -16,7 +15,7 @@ const newGarden = [
 ]
 
 
-function GardenGrid() {
+function GardenSetup() {
     // const [userInfo, setUserInfo] = useState({});
     const [gardenLayout, setGardenLayout] = useState(newGarden);
         
@@ -166,4 +165,4 @@ function GardenGrid() {
     )
 }
 
-export default GardenGrid;
+export default GardenSetup;

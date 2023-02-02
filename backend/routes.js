@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router()
-const plantModel = require('./plantModel');
-const userModel = require('./userModel')
+const plantModel = require('./models/plantModel');
+const userModel = require('./models/userModel')
 const bodyParser = require('body-parser')
 const doSomething = require('./gardeners world scraper/index')
 const jsonParser = bodyParser.json()
