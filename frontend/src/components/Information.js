@@ -49,14 +49,14 @@ function Information (props){
         selectedInformation.forEach(item => userInfo.push(item.info))
         console.log(userInfo)
 
-        // const requestOptions = {
-        //     method: 'PUT',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify(userInfo)
-        // };
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(userInfo)
+        };
 
-        // fetch(`http://localhost:9000/gro/api/plants/${}`, requestOptions)
-        // .then(response => response.json())
+        fetch(`http://localhost:9000/gro/api/users/user2/${props.rowIndex}/${props.spaceIndex}`, requestOptions)
+        .then(response => response.json())
     }
 
     const renderReturnedInformation = () => {

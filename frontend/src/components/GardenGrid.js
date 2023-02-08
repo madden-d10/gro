@@ -147,6 +147,8 @@ function GardenGrid() {
         <GardenModal
           showModal={showModal}
           selectedPlant={selectedPlant}
+          rowIndex={rowIndex}
+          spaceIndex={spaceIndex}
           closeModal={closeModal}
           clearSpace={clearSpace}
           handlePlantSelection={handlePlantSelection}>

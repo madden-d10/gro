@@ -59,7 +59,7 @@ function GardenModal(props) {
           <PlantSpace plant={props.selectedPlant} />
           <button onClick={props.clearSpace}>Clear</button>
         </div>      
-        <Information />
+        <Information rowIndex={props.rowIndex} spaceIndex={props.spaceIndex} />
       </div>
 
     )

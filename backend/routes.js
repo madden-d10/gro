@@ -71,6 +71,18 @@ router.get('/api/users/:username', async (req, res) => {
     }
 })
 
+// Get one user
+router.get('/api/users/:username', async (req, res) => {
+    const username = req.params.username
+    try{
+        const data = await userModel.find({username: username});
+        res.json(data)
+    }
+    catch(error){
+        res.status(500).json({message: error.message})
+    }
+})
+
 // Update one user
 router.put('/api/users/:username', jsonParser, async (req, res) => {
     const username = req.params.username
@@ -83,24 +95,34 @@ router.put('/api/users/:username', jsonParser, async (req, res) => {
     }
 })
 
-//Get by ID Method
-router.get('/api/plants/:id', (req, res) => {
-    res.send('Get by ID API')
-})
-
-//Update by ID Method
-router.put('/api/plants/:id', async (req, res) => {
-    const id = req.params.id
+// Update plant in user layout
+router.put('/api/users/:username/:rowIndex/:columnIndex', jsonParser, async (req, res) => {
+    const username = req.params.username
+    const rowIndex = req.params.rowIndex
+    const columnIndex = req.params.columnIndex
     try{
-        const data = await plantModel.updateOne({id: id}, {userNotes: req.body});
-        res.json(data)
+        const data = await userModel.find({ username : username });
+        data[0].layout[rowIndex][columnIndex].userNotes = req.body;
+        
+        const newData = await userModel.updateOne({username: username}, {layout: data[0].layout});
+        res.json(newData)
     }
     catch(error){
         res.status(500).json({message: error.message})
     }
 })
 
-//Delete by ID Method
+// Get by ID Method
+router.get('/api/plants/:id', (req, res) => {
+    res.send('Get by ID API')
+})
+
+// Update by ID Method
+router.put('/api/plants/:id', async (req, res) => {
+    res.send('Get by ID API')
+})
+
+// Delete by ID Method
 router.delete('/api/plants/:id', (req, res) => {
     res.send('Delete by ID API')
 })
