@@ -16,7 +16,7 @@ function GardenLayout () {
     if (userInfo.layout?.length > 0) {
         return (
             <div id='gardenLayout-wrapper'>
-                <GardenGrid />
+                <GardenGrid userInfo={userInfo} />
             </div>
         )
     } else {

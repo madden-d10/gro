@@ -1,21 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import GardenSpace from './GardenSpace';
 import GardenModal from './GardenModal'
 import '../styles/GardenGrid.css';
 
-function GardenGrid() {
-  const [userInfo, setUserInfo] = useState({});
+function GardenGrid(props) {
+  const [userInfo, setUserInfo] = useState(props.userInfo);
   const [showModal, setShowModal] = useState(false)
   const [selectedPlant, setSelectedPlant] = useState({})
   const [rowIndex, setRowIndex] = useState(0)
   const [spaceIndex, setSpaceIndex] = useState(0)
-      
-  useEffect(() => {
-      fetch("http://localhost:9000/gro/api/users/user2")
-      .then(res => res.json())
-      .then(res => setUserInfo(res[0]))
-      .catch(err => err);
-  }, [])
 
   const updateLayout = (newLayout) => {
     const requestOptions = {
@@ -103,19 +96,19 @@ function GardenGrid() {
   }
 
   const closeModal = async () => {
-    let items = userInfo.layout;
+    let userLayout = userInfo.layout;
     // make a shallow copy of the item
-    let item = {...items[rowIndex][spaceIndex]};
+    let gardenSpace = {...userLayout[rowIndex][spaceIndex]};
     // replace the property
-    item = selectedPlant;
+    gardenSpace = selectedPlant;
     // put it back into the array.
-    if(items[rowIndex][spaceIndex] !== item) {
+    if(userLayout[rowIndex][spaceIndex] !== gardenSpace) {
       // set the state to the new copy
-      item.id = `${rowIndex}${spaceIndex}`
-      item.isUsed = true
-      items[rowIndex][spaceIndex] = item;
-      setUserInfo({layout: items});
-      updateLayout(items)
+      gardenSpace.id = `${rowIndex}${spaceIndex}`
+      gardenSpace.isUsed = true
+      userLayout[rowIndex][spaceIndex] = gardenSpace;
+      setUserInfo({layout: userLayout});
+      updateLayout(userLayout)
     }
 
     setShowModal(false);

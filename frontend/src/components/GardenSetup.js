@@ -1,17 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import '../styles/GardenSetup.css';
 import newGarden from '../newGarden';
 
 function GardenSetup() {
-    // const [userInfo, setUserInfo] = useState({});
     const [gardenLayout, setGardenLayout] = useState(newGarden);
-        
-    useEffect(() => {
-        fetch("http://localhost:9000/gro/api/users/user2")
-        .then(res => res.json())
-        // .then(res => setUserInfo(res[0]))
-        .catch(err => err);
-    }, [])
 
     const getSpaceIndexes = (newLayout) => {
         let lowIndex = 0;
