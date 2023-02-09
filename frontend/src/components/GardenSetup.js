@@ -12,6 +12,7 @@ function GardenSetup() {
 
     for (let row of newLayout) {
       let currentIndex = 0;
+
       for (let space of row) {
         if (isFirstUsedSpaceFound) {
           if (space.isUsed && currentIndex < lowIndex) {
@@ -27,6 +28,7 @@ function GardenSetup() {
             isFirstUsedSpaceFound = true;
           }
         }
+
         if (space.isUsed && currentIndex > highIndex) {
           // the high index is simply set to the index of the used space that is the highest (e.g. the space furthest to the right)
           highIndex = currentIndex;
@@ -80,9 +82,7 @@ function GardenSetup() {
     let i = 0;
     for (let row of newLayout) {
       const newRow = row.filter((space, spaceIndex) => {
-        return (
-          space.isUsed || (spaceIndex >= lowIndex && spaceIndex <= highIndex)
-        );
+        return (space.isUsed || (spaceIndex >= lowIndex && spaceIndex <= highIndex));
       });
 
       if (newRow.length === 0) {
