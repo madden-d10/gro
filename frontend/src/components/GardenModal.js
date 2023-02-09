@@ -1,88 +1,95 @@
-import React, { useState, useEffect } from 'react';
-import ReactModal from 'react-modal';
-import PlantSpace from './PlantSpace';
-import Information from './Information';
-import '../styles/GardenModal.css';
+import React, { useState, useEffect } from "react";
+import ReactModal from "react-modal";
+import PlantSpace from "./PlantSpace";
+import Information from "./Information";
+import "../styles/GardenModal.css";
 
 function GardenModal(props) {
   const [plants, setPlants] = useState([]);
-  const [plantStartIndex, setPlantStartIndex] = useState(0)
-      
-  useEffect(() => {
-      fetch("http://localhost:9000/gro/api/plants")
-      .then(res => res.json()) 
-      .then(res => setPlants(res))
-      .catch(err => err);
+  const [plantStartIndex, setPlantStartIndex] = useState(0);
+  const [plantEndIndex, setPlantEndIndex] = useState(44);
 
-      ReactModal.setAppElement('body')
-  }, [])
+  useEffect(() => {
+    fetch("http://localhost:9000/gro/api/plants")
+      .then((res) => res.json())
+      .then((res) => setPlants(res))
+      .catch((err) => err);
+
+    ReactModal.setAppElement("body");
+  }, []);
 
   const changePage = (num) => {
-    // because state is be one step behind at this stage, this variable is created twice
-    const viewablePlants = plants.slice(plantStartIndex + num, (plantStartIndex + num) + 44)
+    const viewablePlants = plants.slice((plantStartIndex + num), (plantEndIndex + num));
 
     if ((plantStartIndex === 0 && num < 0) || viewablePlants.length <= 0) {
-      return
+      return;
     }
 
-    setPlantStartIndex(plantStartIndex + num)
-  }
+    setPlantStartIndex(plantStartIndex + num);
+    setPlantEndIndex(plantEndIndex + num)
+  };
 
   const renderModalContent = () => {
     if (!props.selectedPlant._id) {
-      return renderAllPlants()
+      return renderAllPlants();
     }
 
-    return renderSelectedPlant()
+    return renderSelectedPlant();
   };
-  
+
   const renderAllPlants = () => {
     return (
-      <div className='plant-container'>
-        {
-          plants.slice(plantStartIndex, plantStartIndex + 44).map((plant, index) => (
-            <PlantSpace key={index} index={index} plant={plant} onClick={() => props.handlePlantSelection(plant, index)} />
-          ))
-        }
-        <div className='button-container'>
-            <button onClick={()=> changePage(-44)}>Prev</button>
-            <button onClick={()=> changePage(+44)}>Next</button>
+      <div className="plant-container">
+        {plants.slice(plantStartIndex, plantEndIndex).map((plant, index) => (
+            <PlantSpace
+              key={index}
+              index={index}
+              plant={plant}
+              onClick={() => props.handlePlantSelection(plant, index)}
+            />
+          ))}
+        <div className="button-container">
+          <button onClick={() => changePage(-44)}>Prev</button>
+          <button onClick={() => changePage(+44)}>Next</button>
         </div>
       </div>
-    )
-  }
+    );
+  };
 
-  const renderUserNotes= (userNotes) => {
+  const renderUserNotes = (userNotes) => {
     return userNotes.map((note, rowIndex) => (
-      <p className={`user-note`} key={rowIndex}>{note}</p>
+      <p className={`user-note`} key={rowIndex}>
+        {note}
+      </p>
     ));
-  }
+  };
 
   const renderSelectedPlant = () => {
     return (
       <div>
-        <div className='single-plant-container'>
+        <div className="single-plant-container">
           <PlantSpace plant={props.selectedPlant} />
           <button onClick={props.clearSpace}>Clear</button>
         </div>
-        <div className='user-notes-container'>
-        <h2>User Notes:</h2>
+        <div className="user-notes-container">
+          <h2>User Notes:</h2>
           {renderUserNotes(props.selectedPlant.userNotes)}
         </div>
         <Information rowIndex={props.rowIndex} spaceIndex={props.spaceIndex} />
       </div>
-
-    )
-  }
+    );
+  };
 
   return (
     <ReactModal isOpen={props.showModal}>
-      <div className='modal-content'>
-          <button className='close-button' onClick={props.closeModal}>Close</button>
-          {renderModalContent()}
+      <div className="modal-content">
+        <button className="close-button" onClick={props.closeModal}>
+          Close
+        </button>
+        {renderModalContent()}
       </div>
     </ReactModal>
-  )
+  );
 }
 
 export default GardenModal;
