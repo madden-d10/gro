@@ -83,7 +83,7 @@ function Information (props){
 
     return (
         <div id='information-wrapper'>
-            <h1>Find further Information</h1>
+            <h2>Find further Information</h2>
             <p><i>Data taken from www.gardenersworld.com</i></p>
             <form className='searchForm'>
                 <input type={'text'} value={searchTerm} onChange={handleChange}></input>

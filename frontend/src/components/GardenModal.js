@@ -38,13 +38,13 @@ function GardenModal(props) {
   
   const renderAllPlants = () => {
     return (
-      <div className='plant-area'>
+      <div className='plant-container'>
         {
           plants.slice(plantStartIndex, plantStartIndex + 44).map((plant, index) => (
             <PlantSpace key={index} index={index} plant={plant} onClick={() => props.handlePlantSelection(plant, index)} />
           ))
         }
-        <div className='button-area'>
+        <div className='button-container'>
             <button onClick={()=> changePage(-44)}>Prev</button>
             <button onClick={()=> changePage(+44)}>Next</button>
         </div>
@@ -52,13 +52,23 @@ function GardenModal(props) {
     )
   }
 
+  const renderUserNotes= (userNotes) => {
+    return userNotes.map((note, rowIndex) => (
+      <p className={`user-note`} key={rowIndex}>{note}</p>
+    ));
+  }
+
   const renderSelectedPlant = () => {
     return (
       <div>
-        <div className='single-plant-area'>
+        <div className='single-plant-container'>
           <PlantSpace plant={props.selectedPlant} />
           <button onClick={props.clearSpace}>Clear</button>
-        </div>      
+        </div>
+        <div className='user-notes-container'>
+        <h2>User Notes:</h2>
+          {renderUserNotes(props.selectedPlant.userNotes)}
+        </div>
         <Information rowIndex={props.rowIndex} spaceIndex={props.spaceIndex} />
       </div>
 
