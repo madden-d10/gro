@@ -10,10 +10,16 @@ function Information(props) {
 
 
   const getMatchingLinks = (value) => {
-    const trimmedLinks = gardenersWorldLinks.map(
-      link => link.replace("how-to/", "").replace("grow-plants/", "").replace("/", "").replaceAll("-", " ")
-    )
-    return trimmedLinks.filter((link) => link.includes(`${value.toLowerCase()}`));
+    const matchingLinks = []
+
+    for (const link of gardenersWorldLinks) {
+      const trimmedLink = link.replace("how-to/", "").replace("grow-plants/", "").replace("/", "").replaceAll("-", " ")
+      if (trimmedLink.includes(`${value.toLowerCase()}`)) {
+        matchingLinks.push(link)
+      }
+    }
+
+    return matchingLinks
   }
 
   const handleChange = (event) => {
