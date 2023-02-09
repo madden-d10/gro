@@ -129,7 +129,8 @@ router.delete('/api/plants/:id', (req, res) => {
 
 // Get tip
 router.get('/api/tip/:endOfURL', async (req, res) => {
-    const endOfURL = req.params.endOfURL.replaceAll('_', '/');
+    const endOfURL = decodeURIComponent(req.params.endOfURL)
+    
     try{
         const data = await doSomething(endOfURL);
         res.json(data)
