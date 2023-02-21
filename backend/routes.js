@@ -3,7 +3,8 @@ const router = express.Router()
 const plantModel = require('./models/plantModel');
 const userModel = require('./models/userModel')
 const bodyParser = require('body-parser')
-const doSomething = require('./gardeners world scraper/index')
+const getTipsGardenersWorld = require('./gardeners world tips scraper/index')
+const getTipsRHS = require('./rhs tips scraper/index')
 const jsonParser = bodyParser.json()
 
 router.get('/', async (req, res) => {
@@ -132,7 +133,20 @@ router.get('/api/tip/:endOfURL', async (req, res) => {
     const endOfURL = decodeURIComponent(req.params.endOfURL)
     
     try{
-        const data = await doSomething(endOfURL);
+        const data = await getTipsGardenersWorld(endOfURL);
+        res.json(data)
+    }
+    catch(error){
+        res.status(500).json({message: error.message})
+    }
+})
+
+// Get tip
+router.get('/api/tip2/:endOfURL', async (req, res) => {
+    const endOfURL = decodeURIComponent(req.params.endOfURL)
+    
+    try{
+        const data = await getTipsRHS(endOfURL);
         res.json(data)
     }
     catch(error){
