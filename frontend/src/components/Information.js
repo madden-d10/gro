@@ -10,26 +10,20 @@ function Information(props) {
   const [selectedInformation, setSelectedInformation] = useState([]);
 
   const getMatchingLinks = (value) => {
-    const gardenersWorldMatchingLinks = []
-    const rhsMatchingLinks = []
+    const matchingLinks = []
+    const allLinks = [...gardenersWorldLinks, ...rhsGrowingGuideLinks]
 
-    for (const gardenersWorldLink of gardenersWorldLinks) {
-      const trimmedLink = gardenersWorldLink.replace("how-to/", "")
-        .replace("grow-plants/", "").replace("/", "").replaceAll("-", " ")
+    for (const link of allLinks) {
+      const trimmedLink = link.replace("how-to/", "").replace("plants/", "")
+        .replace("/growing-guide", "").replace("types/", "").replace("grow-plants/", "")
+        .replaceAll("-", " ").replaceAll("/", " ")
+
       if (trimmedLink.includes(`${value.toLowerCase()}`)) {
-        gardenersWorldMatchingLinks.push(gardenersWorldLink)
+        matchingLinks.push(link)
       }
     }
 
-    for (const rhsGrowingGuideLink of rhsGrowingGuideLinks) {
-      const trimmedLink = rhsGrowingGuideLink.replace("plants/", "")
-        .replace("/growing-guide", "").replace("types/", "").replaceAll("/", " ")
-      if (trimmedLink.includes(`${value.toLowerCase()}`)) {
-        rhsMatchingLinks.push(rhsGrowingGuideLink)
-      }
-    }
-    
-    return [...gardenersWorldMatchingLinks, ...rhsMatchingLinks]
+    return matchingLinks
   }
 
   const handleChange = (event) => {
@@ -58,18 +52,16 @@ function Information(props) {
 
   const getFurtherInformation = (link) => {
     const endOfURL = encodeURIComponent(link);
+    let site = 'gardenersWorld'
 
     if (endOfURL.includes("growing-guide")) {
-      fetch(`http://localhost:9000/gro/api/rhsTip/${endOfURL}`)
-      .then((res) => res.json())
-      .then((res) => setReturnedInformation(res))
-      .catch((err) => err);
-    } else {
-      fetch(`http://localhost:9000/gro/api/gardenersWorldTip/${endOfURL}`)
-        .then((res) => res.json())
-        .then((res) => setReturnedInformation(res))
-        .catch((err) => err);
+      site = 'rhs'
     }
+
+    fetch(`http://localhost:9000/gro/api/tips/${site}/${endOfURL}`)
+    .then((res) => res.json())
+    .then((res) => setReturnedInformation(res))
+    .catch((err) => err);
   };
 
   const addSelectedInformation = () => {

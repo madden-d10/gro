@@ -128,29 +128,27 @@ router.delete('/api/plants/:id', (req, res) => {
     res.send('Delete by ID API')
 })
 
-// Get tip
-router.get('/api/gardenersWorldTip/:endOfURL', async (req, res) => {
+// Get tips
+router.get('/api/tips/:site/:endOfURL', async (req, res) => {
     const endOfURL = decodeURIComponent(req.params.endOfURL)
-    
-    try{
-        const data = await getTipsGardenersWorld(endOfURL);
-        res.json(data)
-    }
-    catch(error){
-        res.status(500).json({message: error.message})
-    }
-})
+    const site = req.params.site
 
-// Get tip
-router.get('/api/rhsTip/:endOfURL', async (req, res) => {
-    const endOfURL = decodeURIComponent(req.params.endOfURL)
-    
-    try{
-        const data = await getTipsRHS(endOfURL);
-        res.json(data)
-    }
-    catch(error){
-        res.status(500).json({message: error.message})
+    if (site === 'gardenersWorld') { 
+        try{
+            const data = await getTipsGardenersWorld(endOfURL);
+            res.json(data)
+        }
+        catch(error){
+            res.status(500).json({message: error.message})
+        }
+    } else {
+        try{
+            const data = await getTipsRHS(endOfURL);
+            res.json(data)
+        }
+        catch(error){
+            res.status(500).json({message: error.message})
+        }
     }
 })
 
