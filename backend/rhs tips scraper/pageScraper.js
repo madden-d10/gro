@@ -8,12 +8,13 @@ const scraperObject = {
 		await page.goto(url);
 
 		// Wait for the required DOM to be rendered
-		await page.waitForSelector('.editor-content');
+		await page.waitForSelector('body');
 
 		let results = []
-		results = await page.$$eval('.editor-content', items => {
-			items = items.map(el => el.querySelector('p')?.textContent)
-			return items;
+		results = await page.$$eval('.accordion-v2__panel', items => {
+			const itemsP = items.map(el => el.querySelector('p')?.textContent)
+			const itemsLI = items.map(el => el.querySelector('li')?.textContent)
+			return [...itemsP, ...itemsLI];
 		});
 		
 		return results

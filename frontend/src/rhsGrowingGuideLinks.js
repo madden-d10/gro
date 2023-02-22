@@ -1,4 +1,4 @@
-[
+const rhsGrowingGuideLinks = [
   "plants/types/shrubs/growing-guide",
   "plants/types/perennials/growing-guide",
   "plants/african-violets/growing-guide",
@@ -218,3 +218,5 @@
   "plants/zantedeschia/growing-guide",
   "plants/zinnia/growing-guide"
 ]
+
+module.exports = rhsGrowingGuideLinks;

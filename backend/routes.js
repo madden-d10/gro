@@ -129,7 +129,7 @@ router.delete('/api/plants/:id', (req, res) => {
 })
 
 // Get tip
-router.get('/api/tip/:endOfURL', async (req, res) => {
+router.get('/api/gardenersWorldTip/:endOfURL', async (req, res) => {
     const endOfURL = decodeURIComponent(req.params.endOfURL)
     
     try{
@@ -142,7 +142,7 @@ router.get('/api/tip/:endOfURL', async (req, res) => {
 })
 
 // Get tip
-router.get('/api/tip2/:endOfURL', async (req, res) => {
+router.get('/api/rhsTip/:endOfURL', async (req, res) => {
     const endOfURL = decodeURIComponent(req.params.endOfURL)
     
     try{

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import gardenersWorldLinks from "../gardenersWorldLinks";
+import rhsGrowingGuideLinks from "../rhsGrowingGuideLinks";
 import "../styles/Information.css";
 
 function Information(props) {
@@ -8,18 +9,27 @@ function Information(props) {
   const [returnedInformation, setReturnedInformation] = useState([]);
   const [selectedInformation, setSelectedInformation] = useState([]);
 
-
   const getMatchingLinks = (value) => {
-    const matchingLinks = []
+    const gardenersWorldMatchingLinks = []
+    const rhsMatchingLinks = []
 
-    for (const link of gardenersWorldLinks) {
-      const trimmedLink = link.replace("how-to/", "").replace("grow-plants/", "").replace("/", "").replaceAll("-", " ")
+    for (const gardenersWorldLink of gardenersWorldLinks) {
+      const trimmedLink = gardenersWorldLink.replace("how-to/", "")
+        .replace("grow-plants/", "").replace("/", "").replaceAll("-", " ")
       if (trimmedLink.includes(`${value.toLowerCase()}`)) {
-        matchingLinks.push(link)
+        gardenersWorldMatchingLinks.push(gardenersWorldLink)
       }
     }
 
-    return matchingLinks
+    for (const rhsGrowingGuideLink of rhsGrowingGuideLinks) {
+      const trimmedLink = rhsGrowingGuideLink.replace("plants/", "")
+        .replace("/growing-guide", "").replace("types/", "").replaceAll("/", " ")
+      if (trimmedLink.includes(`${value.toLowerCase()}`)) {
+        rhsMatchingLinks.push(rhsGrowingGuideLink)
+      }
+    }
+    
+    return [...gardenersWorldMatchingLinks, ...rhsMatchingLinks]
   }
 
   const handleChange = (event) => {
@@ -38,7 +48,8 @@ function Information(props) {
     return links.map((link, index) => (
       <div key={index} className="search-result">
         <a href={link}>
-          {link.replace("how-to/", "").replace("grow-plants/", "").replace("/", "").replaceAll("-", " ")}
+          {link.replace("how-to/", "").replace("grow-plants/", "").replace("/growing-guide", "")
+          .replace("plants/", "").replace("types/", "").replace("/", " ").replaceAll("-", " ")}
         </a>
         <button onClick={() => getFurtherInformation(link)}>Get Tips</button>
       </div>
@@ -48,10 +59,17 @@ function Information(props) {
   const getFurtherInformation = (link) => {
     const endOfURL = encodeURIComponent(link);
 
-    fetch(`http://localhost:9000/gro/api/tip/${endOfURL}`)
+    if (endOfURL.includes("growing-guide")) {
+      fetch(`http://localhost:9000/gro/api/rhsTip/${endOfURL}`)
       .then((res) => res.json())
       .then((res) => setReturnedInformation(res))
       .catch((err) => err);
+    } else {
+      fetch(`http://localhost:9000/gro/api/gardenersWorldTip/${endOfURL}`)
+        .then((res) => res.json())
+        .then((res) => setReturnedInformation(res))
+        .catch((err) => err);
+    }
   };
 
   const addSelectedInformation = () => {
@@ -99,7 +117,7 @@ function Information(props) {
     <div id="information-wrapper">
       <h2>Find further Information</h2>
       <p>
-        <i>Data taken from www.gardenersworld.com</i>
+        Data taken from <i>www.gardenersworld.com</i> and <i>www.rhs.org.uk</i>
       </p>
       <form className="searchForm">
         <input type={"text"} value={searchTerm} onChange={handleChange}></input>
