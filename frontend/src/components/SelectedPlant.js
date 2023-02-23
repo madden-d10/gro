@@ -13,16 +13,16 @@ function SelectedPlant(props) {
 
   return (
     <div>
-    <div className="single-plant-container">
-      <PlantSpace plant={props.selectedPlant} />
-      <button onClick={props.clearSpace}>Clear</button>
+        <div className="single-plant-container">
+					<PlantSpace plant={props.selectedPlant} />
+					<button onClick={props.clearSpace}>Clear</button>
+				</div>
+				<div className="user-notes-container">
+					<h2>User Notes:</h2>
+					{renderUserNotes(props.selectedPlant.userNotes)}
+        </div>
+        <Information rowIndex={props.rowIndex} spaceIndex={props.spaceIndex} />
     </div>
-    <div className="user-notes-container">
-      <h2>User Notes:</h2>
-      {renderUserNotes(props.selectedPlant.userNotes)}
-    </div>
-    <Information rowIndex={props.rowIndex} spaceIndex={props.spaceIndex} />
-  </div>
   );
 }
 

@@ -12,9 +12,30 @@ router.get('/', async (req, res) => {
 })
 
 // Create new plant
-router.post('/api/plants', async (req, res) => {
+router.post('/api/plants', jsonParser, async (req, res) => {
     const data = new plantModel({
-        name: req.body.name
+        name: req.body.name,
+        group: req.body.group,
+        lifecycle: req.body.lifecycle,
+        flowerTime: req.body.flowerTime,
+        sunRequirements: req.body.sunRequirements,
+        uses: req.body.uses,
+        looks: req.body.looks,
+        color: req.body.color,
+        plantHeight: req.body.plantHeight,
+        inflorescenceHeight: req.body.inflorescenceHeight,
+        wildlifeAttractant: req.body.wildlifeAttractant,
+        suitableLocations: req.body.suitableLocations,
+        plantHabit: req.body.plantHabit,
+        leaves: req.body.leaves,
+        resistances: req.body.resistances,
+        soilpH: req.body.soilpH,
+        spread: req.body.spread,
+        parentage: req.body.parentage,
+        childPlants: req.body.childPlants,
+        fruit: req.body.fruit,
+        miscellaneous: req.body.miscellaneous,
+        userNotes: []
     })
 
     try {

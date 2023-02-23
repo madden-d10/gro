@@ -24,7 +24,8 @@ const plantSchema = new mongoose.Schema({
     parentage: { type: String },
     childPlants: { type: String },
     plantHeight: { type: String },
-    fruit: { type: String }
+    fruit: { type: String },
+    userNotes: { type: Array },
 })
 
 module.exports = mongoose.model('plants', plantSchema)

@@ -4,7 +4,9 @@ import SelectedPlant from "./SelectedPlant";
 import "../styles/GardenModal.css";
 
 function GardenModal(props) {
-  const renderModalContent = () => {
+  ReactModal.setAppElement("body");
+  
+  const existingPlantOptions = () => {
     if (!props.selectedPlant._id) {
       return <AllPlants handlePlantSelection={props.handlePlantSelection} />;
     }
@@ -13,12 +15,12 @@ function GardenModal(props) {
   };
 
   return (
-    <ReactModal isOpen={props.showModal} appElement={document.querySelector('#root')}>
+    <ReactModal isOpen={props.showModal}>
       <div className="modal-content">
         <button className="close-button" onClick={props.closeModal}>
           Close
         </button>
-        {renderModalContent()}
+        {existingPlantOptions()}
       </div>
     </ReactModal>
   );
