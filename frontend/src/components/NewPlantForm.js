@@ -16,18 +16,16 @@ function NewPlantForm(props) {
       .then(response => response.json())
   }
 
-
-
 	const handleSubmit = (event) => {
 		event.preventDefault();
 
 		const newPlantObj = {}
 		for (const field of formFields) {
 			newPlantObj[field] = event.target[field].value || ""
+			event.target[field].value = " "
 		}
 
 		createNewPlant(newPlantObj)
-		props.changeAddingNewPlant(false)
 	}
 
 	const renderFormFields = () => {

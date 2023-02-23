@@ -50,7 +50,7 @@ function AllPlants(props) {
 
   return (
 		<div className="all-plants">
-			<button onClick={() => setAddingNewPlant(true)}>Add Plant</button>			
+			<button onClick={() => setAddingNewPlant(!addingNewPlant)}>{addingNewPlant ? 'Back' : 'Add Plant'}</button>			
 			{!addingNewPlant && renderAllPlants() || <NewPlantForm changeAddingNewPlant={setAddingNewPlant} />}
 		</div>
   );
