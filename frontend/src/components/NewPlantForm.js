@@ -1,4 +1,5 @@
 import React from "react";
+import "../styles/newPlantForm.css"
 
 const formFields = ["name", "group", "lifecycle", "flowerTime", "sunRequirements","uses", "looks", 
 	"color", "plantHeight", "inflorescenceHeight", "wildlifeAttractant", "suitableLocations", "plantHabit",
@@ -34,7 +35,7 @@ function NewPlantForm(props) {
 			const label = result.charAt(0).toUpperCase() + result.slice(1);
 			
 			return (
-				<label key={index} htmlFor={field}>{label}
+				<label key={index} htmlFor={field}>{label}:
 					<input id={field} name={field} type="text"></input>
 				</label>
 			)
@@ -42,11 +43,12 @@ function NewPlantForm(props) {
 	}
 
 	return (
-		<form className="new-plant-form" onSubmit={handleSubmit}>
-			{renderFormFields()}
-			
-			<input type="submit" value="Submit"></input>
-		</form> 
+		<div className="form-container">
+			<form className="new-plant-form" onSubmit={handleSubmit}>
+				{renderFormFields()}
+				<input type="submit" value="Submit"></input>
+			</form> 
+		</div>
 		)
 }
 
