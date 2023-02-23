@@ -16,12 +16,10 @@ function GardenModal(props) {
 
   return (
     <ReactModal isOpen={props.showModal}>
-      <div className="modal-content">
         <button className="close-button" onClick={props.closeModal}>
           Close
         </button>
         {existingPlantOptions()}
-      </div>
     </ReactModal>
   );
 }

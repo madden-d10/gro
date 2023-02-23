@@ -58,6 +58,19 @@ router.get('/api/plants', async (req, res) => {
     }
 })
 
+// // Filter plants
+// router.get('/api/plants/filter/:group', async (req, res) => {
+//     const group = req.params.group
+
+//     try{
+//         const data = await plantModel.find({ 'group': group });
+//         res.json(data)
+//     }
+//     catch(error){
+//         res.status(500).json({message: error.message})
+//     }
+// })
+
 // Get one plant
 router.get('/api/plants/:id', async (req, res) => {
     const id = req.params.id
