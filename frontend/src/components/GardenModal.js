@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReactModal from "react-modal";
 import PlantSpace from "./PlantSpace";
-import Information from "./Information";
+import Information from "./Tips";
 import "../styles/GardenModal.css";
 
 function GardenModal(props) {

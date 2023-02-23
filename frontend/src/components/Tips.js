@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import gardenersWorldLinks from "../gardenersWorldLinks";
 import rhsGrowingGuideLinks from "../rhsGrowingGuideLinks";
-import "../styles/Information.css";
+import "../styles/Tips.css";
 
-function Information(props) {
+function Tips(props) {
   const [links, setLinks] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [returnedInformation, setReturnedInformation] = useState([]);
@@ -120,4 +120,4 @@ function Information(props) {
   );
 }
 
-export default Information;
+export default Tips;
