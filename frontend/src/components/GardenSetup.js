@@ -137,7 +137,7 @@ function GardenSetup() {
   };
 
   return (
-    <div className="garden-setup">
+    <div className="garden-setup-container">
       {renderSpaces()}
       <button onClick={() => updateLayout(gardenLayout)}>Create</button>
     </div>

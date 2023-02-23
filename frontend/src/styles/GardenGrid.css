@@ -4,6 +4,8 @@
     border: 10px solid rgb(234, 234, 234);
     border-radius: 5px;
     background-color: rgb(234, 234, 234);
+    width: fit-content;
+    margin: auto;
 }
 
 .row {
