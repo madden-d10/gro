@@ -17,10 +17,9 @@ function GardenLayout () {
       if (userInfo.layout?.length > 0) {
         return <GardenGrid userInfo={userInfo} />
       } else {
-          return <GardenSetup />
+        return <GardenSetup />
       }
     }
-
 
     return (
       <div className='garden-container'>
