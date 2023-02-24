@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
-import ReactModal from "react-modal";
 import PlantSpace from "./PlantSpace";
 import NewPlantForm from "./NewPlantForm";
 import "../styles/GardenModal.css";
+
+let allPlants = []
 
 function AllPlants(props) {
   const [plants, setPlants] = useState([]);
   const [plantStartIndex, setPlantStartIndex] = useState(0);
   const [plantEndIndex, setPlantEndIndex] = useState(44);
 	const [addingNewPlant, setAddingNewPlant] = useState(false);
-	const [plantGroupOptions, setPlantGroupOptions] = useState([]);
-	const [plantLifecycleOptions, setPlantLifecycleOptions] = useState([]);
-	const [plantUsesOptions, setPlantUsesOptions] = useState([]);
+	const [groupOptions, setGroupOptions] = useState([]);
+	const [lifecycleOptions, setLifecycleOptions] = useState([]);
+	const [usesOptions, setUsesOptions] = useState([]);
 
   useEffect(() => {
     fetch("http://localhost:9000/gro/api/plants")
@@ -24,29 +25,34 @@ function AllPlants(props) {
 		return str.split(', ').join('-').split(' or ').join('-').split('-') || [str]
 	}
 
-	const getFilterOptions = (allPlants) => {
-		setPlants(allPlants)
-		const allPlantsGroups = new Set()
-		const allPlantsLifeCycle = new Set()
-		const allPlantsUses = new Set()
+	const getFilterOptions = (response) => {
+		const groups = new Set()
+		const lifecycles = new Set()
+		const uses = new Set()
 
-		for (const plant of allPlants) {
-			allPlantsGroups.add(plant.group)
+		for (const plant of response) {
+			groups.add(plant.group)
 
-			const lifecycleOptions = splitOptions(plant.lifecycle || "")
-			for (const x of lifecycleOptions) {
-				allPlantsLifeCycle.add(x)
+			const splitLifecycles = splitOptions(plant.lifecycle || "")
+			for (const lifecycle of splitLifecycles) {
+				if (lifecycle !== "") {
+					lifecycles.add(lifecycle)
+				}
 			}
 
-			const usesOptions = splitOptions(plant.uses || "")
-			for (const option of usesOptions) {
-				allPlantsUses.add(option)
+			const splitUses = splitOptions(plant.uses || "")
+			for (const use of splitUses) {
+				if (use !== "") {
+					uses.add(use)
+				}
 			}
 		}
 
-		setPlantGroupOptions([...allPlantsGroups]);
-		setPlantLifecycleOptions([...allPlantsLifeCycle])
-		setPlantUsesOptions([...allPlantsUses])
+		allPlants = response
+		setPlants(response)
+		setGroupOptions([...groups]);
+		setLifecycleOptions([...lifecycles])
+		setUsesOptions([...uses])
 	}
 
   const changePage = (num) => {
@@ -56,30 +62,45 @@ function AllPlants(props) {
       return;
     }
 
-    setPlantStartIndex(plantStartIndex + num);
+    setPlantStartIndex(plantStartIndex + num); 
     setPlantEndIndex(plantEndIndex + num)
   };
 
-	const filterPlants = (event, type) => {
-		const aeoniums = plants.filter(plant => plant[type].includes(event.target.value))
-		setPlants(aeoniums)
+	const filterPlants = async () => {
+		const selectedGroup = document.querySelector("#plant-group-options").value
+		const selectedLifecycle = document.querySelector("#plant-lifecycle-options").value
+		const selectedUse = document.querySelector("#plant-uses-options").value
+		const filteredPlants = allPlants.filter(plant => {
+			return (
+				(selectedGroup === "-" ? true : plant.group?.includes(selectedGroup)) &&
+				(selectedLifecycle === "-" ? true : plant.lifecycle?.includes(selectedLifecycle)) &&
+				(selectedUse === "-" ? true : plant.uses?.includes(selectedUse))
+			)
+		})
+		setPlants(filteredPlants)
 	}
 
 	const renderOptions = () => {
 		return (
 			<div className="options-container">
-				<select id="plant-group-options" onChange={(event) => filterPlants(event, 'group')}>
-					{plantGroupOptions.map((groupOption, index) => (
+				<label htmlFor="plant-group-options">Group</label>
+				<select id="plant-group-options" onChange={filterPlants}>
+					<option>-</option>
+					{groupOptions.map((groupOption, index) => (
 						<option key={index} value={groupOption}>{groupOption}</option>
 					))}
 				</select>
-				<select id="plant-lifecycle-options" onChange={(event) => filterPlants(event, 'lifecycle')}>
-					{plantLifecycleOptions.map((lifecycleOption, index) => (
+				<label htmlFor="plant-lifecycle-options">Lifecycle</label>
+				<select id="plant-lifecycle-options" onChange={filterPlants}>
+					<option>-</option>
+					{lifecycleOptions.map((lifecycleOption, index) => (
 						<option key={index} value={lifecycleOption}>{lifecycleOption}</option>
 					))}
 				</select>
-				<select id="plant-uses-options" onChange={(event) => filterPlants(event, 'flowerTime')}>
-					{plantUsesOptions.map((usesOption, index) => (
+				<label htmlFor="plant-uses-options">Uses</label>
+				<select id="plant-uses-options" onChange={filterPlants}>
+					<option>-</option>
+					{usesOptions.map((usesOption, index) => (
 						<option key={index} value={usesOption}>{usesOption}</option>
 					))}
 				</select>
