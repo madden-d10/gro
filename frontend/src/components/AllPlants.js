@@ -13,6 +13,7 @@ function AllPlants(props) {
 	const [groupOptions, setGroupOptions] = useState([]);
 	const [lifecycleOptions, setLifecycleOptions] = useState([]);
 	const [usesOptions, setUsesOptions] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     fetch("http://localhost:9000/gro/api/plants")
@@ -108,9 +109,36 @@ function AllPlants(props) {
 		)
 	}
 
+	const getMatchingPlants = (value) => {
+    const matchingPlants = []
+
+    for (const plant of allPlants) {
+      if (plant.name.toLowerCase().includes(`${value.toLowerCase()}`)) {
+        matchingPlants.push(plant)
+      }
+    }
+
+    return matchingPlants
+  }
+
+  const handleChange = (event) => {
+    const { value } = event.target;
+		setSearchTerm(value)
+
+    if (value.length === 0) {
+      return setPlants(allPlants);
+    }
+
+    const matchingPlants = getMatchingPlants(value)
+    setPlants(matchingPlants);
+  };
+
 	const renderAllPlants = () => {
 		return (
-			<div>
+			<div>			
+				<form className="searchForm">
+					<input type={"text"} value={searchTerm} onChange={handleChange}></input>
+				</form>
 				{renderOptions()}
 				<div className="plant-container">
 					{plants?.slice(plantStartIndex, plantEndIndex).map((plant, index) => (
