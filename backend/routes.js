@@ -8,9 +8,35 @@ const getTipsRHS = require("./rhs tips scraper/index");
 const jsonParser = bodyParser.json();
 const fs = require("fs");
 const fileupload = require('express-fileupload')
+const bcrypt = require("bcrypt")
 
 router.get("/", async (req, res) => {
   res.send("Hello world");
+});
+
+router.post("/api/login", jsonParser, async (req, res) => {
+  const username = req.body.username
+  const password = req.body.password
+  let data;
+
+  try {
+    data = await userModel.find({ username: username });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+
+  if (data.length <= 0) {
+    return res.status(401).json({ message: 'Incorrect username or password'})
+  }
+
+  bcrypt.compare(password, data[0].password)
+  .then(result => {
+    if (result) {
+      res.json(data);
+    } else {
+      res.status(401).json({ message: 'Incorrect username or password'})
+    }
+  })
 });
 
 // Create new plant

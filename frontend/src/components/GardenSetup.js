@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../styles/GardenSetup.css";
 import newGarden from "../newGarden";
 
-function GardenSetup() {
+function GardenSetup(props) {
   const [gardenLayout, setGardenLayout] = useState(newGarden);
 
   const getSpaceIndexes = (newLayout) => {
@@ -105,7 +105,7 @@ function GardenSetup() {
       body: JSON.stringify(newLayout),
     };
 
-    fetch("http://localhost:9000/gro/api/users/user2", requestOptions)
+    fetch(`http://localhost:9000/gro/api/users/${props.username}`, requestOptions)
       .then((response) => response.json())
       .then(window.location.reload());
   };
