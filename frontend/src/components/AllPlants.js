@@ -113,7 +113,7 @@ function AllPlants(props) {
     const matchingPlants = []
 
     for (const plant of allPlants) {
-      if (plant.name.toLowerCase().includes(`${value.toLowerCase()}`)) {
+      if (plant.name?.toLowerCase().includes(`${value.toLowerCase()}`)) {
         matchingPlants.push(plant)
       }
     }

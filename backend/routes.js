@@ -6,6 +6,8 @@ const bodyParser = require("body-parser");
 const getTipsGardenersWorld = require("./gardeners world tips scraper/index");
 const getTipsRHS = require("./rhs tips scraper/index");
 const jsonParser = bodyParser.json();
+const fs = require("fs");
+const fileupload = require('express-fileupload')
 
 router.get("/", async (req, res) => {
   res.send("Hello world");
@@ -38,12 +40,54 @@ router.post("/api/plants", jsonParser, async (req, res) => {
     userNotes: [],
   });
 
-  try {
+	const path = '../gro/frontend/public/images/' + req.body.name;
+
+	fs.access(path, (error) => {
+		// To check if the given directory 
+		// already exists or not
+		if (error) {
+			// If current directory does not exist
+			// then create it
+			fs.mkdir(path, (error) => {
+				if (error) {
+					console.log(error);
+				} else {
+					console.log("New Directory created successfully !!");
+				}
+			});
+		} else {
+			console.log("Given Directory already exists !!");
+		}
+	});
+
+	try {
     const dataToSave = await data.save();
     res.status(200).json(dataToSave);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
+});
+
+// Upload new image
+router.post("/api/plants/image", fileupload(), async (req, res) => {
+	const name = req.body.name
+  const path = `../gro/frontend/public/images/${name}/0 ${name}.jpg`
+
+  req.files.image.mv(path, (error) => {
+    if (error) {
+      console.error(error)
+      res.writeHead(500, {
+        'Content-Type': 'image/jpeg'
+      })
+      res.end(JSON.stringify({ status: 'error', message: error }))
+      return
+    }
+
+    res.writeHead(200, {
+      'Content-Type': 'image/jpeg'
+    })
+    res.end(JSON.stringify({ status: 'success' }))
+  })
 });
 
 // Get all plants
