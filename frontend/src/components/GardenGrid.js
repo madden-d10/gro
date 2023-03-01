@@ -134,18 +134,21 @@ function GardenGrid(props) {
   };
 
   return (
-    <div className="GardenGrid">
-      {renderSpaces()}
-      <div>
-        <GardenModal
-          showModal={showModal}
-          selectedPlant={selectedPlant}
-          rowIndex={rowIndex}
-          spaceIndex={spaceIndex}
-          closeModal={closeModal}
-          clearSpace={clearSpace}
-          handlePlantSelection={handlePlantSelection}>
-        </GardenModal>
+    <div className="garden-grid-container">
+      <h1>Your Garden</h1>
+      <div className="garden-grid">
+        {renderSpaces()}
+        <div>
+          <GardenModal
+            showModal={showModal}
+            selectedPlant={selectedPlant}
+            rowIndex={rowIndex}
+            spaceIndex={spaceIndex}
+            closeModal={closeModal}
+            clearSpace={clearSpace}
+            handlePlantSelection={handlePlantSelection}>
+          </GardenModal>
+        </div>
       </div>
     </div>
   )

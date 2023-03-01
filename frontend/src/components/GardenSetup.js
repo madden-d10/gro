@@ -138,6 +138,7 @@ function GardenSetup(props) {
 
   return (
     <div className="garden-setup-container">
+      <h1>Garden Setup</h1>
       {renderSpaces()}
       <button onClick={() => updateLayout(gardenLayout)}>Create</button>
     </div>

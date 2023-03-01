@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import '../styles/Login.css'
   
 function Login () {
   const handleLoginRequest = (response) => {
@@ -32,15 +33,18 @@ function Login () {
   }
 
     return (
-      <form id="login-form" onSubmit={submitLoginForm}>
-        <label>Username
-          <input type="text" name="username" id="username" />
-        </label>
-        <label>Password
-          <input type="password" name="password" id="password"/>
-        </label>
-        <input type="submit" value="Login"></input>
-      </form>
+      <div className='login-form-container'>
+      <h1>Login</h1>
+        <form id="login-form" onSubmit={submitLoginForm}>
+          <label>Username
+            <input type="text" name="username" id="username" />
+          </label>
+          <label>Password
+            <input type="password" name="password" id="password"/>
+          </label>
+          <input type="submit" value="Login"></input>
+        </form>
+      </div>
     )
 }
   
