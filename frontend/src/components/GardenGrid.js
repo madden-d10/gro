@@ -17,7 +17,7 @@ function GardenGrid(props) {
       body: JSON.stringify(newLayout)
     };
 
-    fetch('http://localhost:9000/gro/api/users/user2', requestOptions)
+    fetch(`http://localhost:9000/gro/api/users/${props.userInfo.username}`, requestOptions)
       .then(response => response.json())
   }
 
