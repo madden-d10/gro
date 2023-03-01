@@ -15,3 +15,24 @@ code {
 #root {
   padding: 2rem 0;
 }
+
+button {
+  border: none;
+  border-radius: 0.2rem;
+  color: white;
+  background-color: #001742;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #01266b;
+}
+
+/* Color Theme Swatches in Hex */
+/* .dark-green-abstract-background-1-hex { color: #044024; }
+.dark-green-abstract-background-2-hex { color: #02401D; }
+.dark-green-abstract-background-3-hex { color: #032613; }
+.dark-green-abstract-background-4-hex { color: #020D05; }
+.dark-green-abstract-background-5-hex { color: #9FA6A1; }
+.blue { color: #003342; }
+*/

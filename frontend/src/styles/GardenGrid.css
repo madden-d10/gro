@@ -5,15 +5,15 @@
 }
 
 h1 {
-    color: rgba(0, 161, 75, 0.4)
+    color: #032613
 }
 
 .garden-grid {
     display: flex;
     flex-direction: column;
-    border: 10px solid rgb(234, 234, 234);
+    border: 10px solid #9FA6A1;
     border-radius: 5px;
-    background-color: rgb(234, 234, 234);
+    background-color: #9FA6A1;
     width: fit-content;
     margin: auto;
 }

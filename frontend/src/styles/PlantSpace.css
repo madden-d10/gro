@@ -3,14 +3,14 @@
     height: 400px;
     padding: 10px;
     margin: 10px;
-    background-color: #444;
+    background-color: #020D05;
     color: white;
     border-radius: 5px;
 }
 
 .plant-item:hover {
     cursor: pointer;
-    background-color: rgb(44, 44, 44);
+    background-color: #032613;
 }
 
 .plant-item div {
