@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import GardenGrid from './components/GardenGrid';
 import GardenSetup from './components/GardenSetup';
 import Login from './components/Login'
+import './styles/App.css'
 
 let username;
   
@@ -24,9 +25,19 @@ function App () {
     }
   }
 
+  const handleLogoutRequest = () => {
+    sessionStorage.removeItem('username')
+    window.location.reload()
+  }
+
   const renderApp = () => {
     if (username?.length > 0) {
-      return renderGarden()
+      return (
+        <div className='garden-container'>
+          {renderGarden()}
+          <button onClick={handleLogoutRequest}>Logout</button>
+        </div>
+      )
     } else {
       return <Login />
     }
