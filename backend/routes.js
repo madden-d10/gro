@@ -183,17 +183,15 @@ router.put("/api/users/:username", jsonParser, async (req, res) => {
   }
 });
 
-// Update plant in user layout
-router.put(
-  "/api/users/:username/:rowIndex/:columnIndex",
-  jsonParser,
-  async (req, res) => {
+// Update user notes in plant in user layout
+router.put("/api/users/:username/:rowIndex/:columnIndex", jsonParser, async (req, res) => {
     const username = req.params.username;
     const rowIndex = req.params.rowIndex;
     const columnIndex = req.params.columnIndex;
+    
     try {
       const data = await userModel.find({ username: username });
-      data[0].layout[rowIndex][columnIndex].userNotes = req.body;
+      data[0].layout[rowIndex][columnIndex].userNotes.push(req.body);
 
       const newData = await userModel.updateOne(
         { username: username },
