@@ -6,18 +6,19 @@ const scraperObject = {
 		let page = await browser.newPage();
 		console.log(`Navigating to ${url}`);
 		await page.goto(url);
-
+		
 		// Wait for the required DOM to be rendered
 		await page.waitForSelector('.editor-content');
 
 		let results = []
-		results = await page.$$eval('.editor-content', items => {
-			items = items.map(el => el.querySelector('p')?.textContent)
+		results = await page.$$eval('.editor-content > p', items => {
+			items = items.map(el => el?.textContent)
 			return items;
 		});
 		
-		return results
-	}
+		return results.slice(0, -2)
+	},
+
 }
 
 module.exports = scraperObject;
