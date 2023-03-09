@@ -1,5 +1,6 @@
 .form-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -19,7 +20,16 @@ input {
 
 input[type="submit"] {
   width: fit-content;
-  padding: 0.2rem;
+  padding: 0.5rem 0.7rem;
   margin-top: 1rem;
   align-self: center;
+  border: none;
+  border-radius: 0.2rem;
+  color: white;
+  background-color: #001742;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #01266b;
 }

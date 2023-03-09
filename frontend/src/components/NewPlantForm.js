@@ -59,10 +59,11 @@ function NewPlantForm() {
 
 	return (
 		<div className="form-container">
+		<h2>New Plant</h2>
 			<form className="new-plant-form" onSubmit={handleSubmit}>
 				{renderFormFields()}
 				<input type="file" id="image" name="image" />
-				<input type="submit" value="Submit"></input>
+				<input type="submit" value="Submit" className="button"></input>
 			</form> 
 		</div>
 		)
