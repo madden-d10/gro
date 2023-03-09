@@ -226,7 +226,7 @@ router.get("/api/tips/:site/:endOfURL", async (req, res) => {
   const endOfURL = decodeURIComponent(req.params.endOfURL);
   const site = req.params.site;
 
-  if (site === "gardenersWorld") {
+  if (site === "GW") {
     try {
       const data = await getTipsGardenersWorld(endOfURL);
       res.json(data);

@@ -1,5 +1,5 @@
 import PlantSpace from "./PlantSpace";
-import Information from "./Tips";
+import Tips from "./Tips";
 import "../styles/GardenModal.css";
 
 function SelectedPlant(props) {
@@ -21,7 +21,7 @@ function SelectedPlant(props) {
 					<h2>User Notes:</h2>
 					{renderUserNotes(props.selectedPlant.userNotes)}
         </div>
-        <Information rowIndex={props.rowIndex} spaceIndex={props.spaceIndex} />
+        <Tips selectedPlant={props.selectedPlant} />
     </div>
   );
 }

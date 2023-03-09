@@ -16,6 +16,11 @@ a {
 }
 
 .returned-information:hover {
-    background-color: goldenrod;
+    font-weight: 500;
     cursor: pointer;
+}
+
+.selected-information {
+    color: #30aa67;
+    font-weight: 500;
 }

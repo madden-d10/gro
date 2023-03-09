@@ -3,6 +3,16 @@ import gardenersWorldLinks from "../gardenersWorldLinks";
 import rhsGrowingGuideLinks from "../rhsGrowingGuideLinks";
 import "../styles/Tips.css";
 
+let allLinks = [];
+
+for (const link of gardenersWorldLinks ) {
+  allLinks.push({website: 'GW', text: link})
+}
+
+for (const link of rhsGrowingGuideLinks ) {
+  allLinks.push({website: 'RHS', text: link})
+}
+
 function Tips(props) {
   const [links, setLinks] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -11,10 +21,9 @@ function Tips(props) {
 
   const getMatchingLinks = (value) => {
     const matchingLinks = []
-    const allLinks = [...gardenersWorldLinks, ...rhsGrowingGuideLinks]
 
     for (const link of allLinks) {
-      const trimmedLink = link.replace("how-to/", "").replace("plants/", "")
+      const trimmedLink = link.text.replace("how-to/", "").replace("plants/", "")
         .replace("/growing-guide", "").replace("types/", "").replace("grow-plants/", "")
         .replaceAll("-", " ").replaceAll("/", " ")
 
@@ -41,8 +50,9 @@ function Tips(props) {
   const renderLinks = () => {
     return links.map((link, index) => (
       <div key={index} className="search-result">
-        <a href={link}>
-          {link.replace("how-to/", "").replace("grow-plants/", "").replace("/growing-guide", "")
+        <span>(<i>{link.website}</i>)</span>
+        <a href={link.text}>
+          {link.text.replace("how-to/", "").replace("grow-plants/", "").replace("/growing-guide", "")
           .replace("plants/", "").replace("types/", "").replace("/", " ").replaceAll("-", " ")}
         </a>
         <button onClick={() => getFurtherInformation(link)}>Get Tips</button>
@@ -51,14 +61,9 @@ function Tips(props) {
   };
 
   const getFurtherInformation = (link) => {
-    const endOfURL = encodeURIComponent(link);
-    let site = 'gardenersWorld'
+    const endOfURL = encodeURIComponent(link.text);
 
-    if (endOfURL.includes("growing-guide")) {
-      site = 'rhs'
-    }
-
-    fetch(`http://localhost:9000/gro/api/tips/${site}/${endOfURL}`)
+    fetch(`http://localhost:9000/gro/api/tips/${link.website}/${endOfURL}`)
     .then((res) => res.json())
     .then((res) => setReturnedInformation(res))
     .catch((err) => err);
@@ -74,7 +79,7 @@ function Tips(props) {
       body: JSON.stringify(userInfo),
     };
 
-    fetch(`http://localhost:9000/gro/api/users/user2/${props.rowIndex}/${props.spaceIndex}`, requestOptions)
+    fetch(`http://localhost:9000/gro/api/users/user2/${props.selectedPlant.id.charAt(0)}/${props.selectedPlant.id.charAt(1)}`, requestOptions)
     .then((response) => response.json());
   };
 
@@ -90,7 +95,17 @@ function Tips(props) {
   };
 
   const handleInformationClick = (index, info) => {
-    setSelectedInformation([...selectedInformation, { index, info }]);
+    const nthChild = index + 1
+    const selectedElement = document.querySelector(`.returned-information:nth-child(${nthChild})`)
+
+    if (!selectedElement.classList.contains("selected-information")) {
+      selectedElement.classList.add("selected-information")
+      setSelectedInformation([...selectedInformation, { index, info }]);
+      return
+    }
+
+    setSelectedInformation(selectedInformation.filter(item => item.index !== index))
+    selectedElement.classList.remove("selected-information")
   };
 
   const renderReturnedInformationList = () => {
