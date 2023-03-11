@@ -1,9 +1,28 @@
+import { useState, useEffect } from 'react';
 import PlantSpace from "./PlantSpace";
 import Tips from "./Tips";
 import "../styles/GardenModal.css";
 
 function SelectedPlant(props) {
-  const renderUserNotes = (userNotes) => {
+  const [userNotes, setUserNotes] = useState([])
+
+  useEffect(() => {
+    const username = sessionStorage.getItem('username')
+
+    fetch(`http://localhost:9000/gro/api/users/${username}`)
+    .then(response => response.json())
+    .then(response => {
+      for (const row of response[0]?.layout) {
+        for (const space of row) {
+          if (space.id === props.selectedPlant.id) {
+            setUserNotes(space.userNotes)
+          }
+        }
+      }
+    })
+  }, [userNotes])
+
+  const renderUserNotes = () => {
     return userNotes.map((note, rowIndex) => (
       <p className={`user-note`} key={rowIndex}>
         {note}
@@ -19,9 +38,9 @@ function SelectedPlant(props) {
 				</div>
 				<div className="user-notes-container">
 					<h2>User Notes:</h2>
-					{renderUserNotes(props.selectedPlant.userNotes)}
+					{renderUserNotes(userNotes)}
         </div>
-        <Tips selectedPlant={props.selectedPlant} />
+        <Tips selectedPlant={props.selectedPlant} userNotes={userNotes} setUserNotes={setUserNotes}/>
     </div>
   );
 }

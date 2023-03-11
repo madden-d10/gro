@@ -81,6 +81,8 @@ function Tips(props) {
 
     fetch(`http://localhost:9000/gro/api/users/user2/${props.selectedPlant.id.charAt(0)}/${props.selectedPlant.id.charAt(1)}`, requestOptions)
     .then((response) => response.json());
+
+    props.setUserNotes([props.userNotes, ...userInfo])
   };
 
   const renderReturnedInformation = () => {
