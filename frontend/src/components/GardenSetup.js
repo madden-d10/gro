@@ -110,14 +110,14 @@ function GardenSetup(props) {
       .then(window.location.reload());
   };
 
-  const handleClick = (rowIndex, spaceIndex) => {
+  const handleClick = (id, rowIndex, spaceIndex) => {
     newGarden[rowIndex][spaceIndex].isUsed = !newGarden[rowIndex][spaceIndex].isUsed;
     setGardenLayout(newGarden);
 
     if (newGarden[rowIndex][spaceIndex].isUsed) {
-      document.getElementById(`${rowIndex}${spaceIndex}`).style.backgroundColor = "green";
+      document.getElementById(id).style.backgroundColor = "green";
     } else {
-      document.getElementById(`${rowIndex}${spaceIndex}`).style.backgroundColor = "#444";
+      document.getElementById(id).style.backgroundColor = "#444";
     }
   };
 
@@ -129,7 +129,7 @@ function GardenSetup(props) {
             id={space.id}
             key={`${rowIndex}${spaceIndex}`}
             className={"setup-space"}
-            onClick={() => handleClick(rowIndex, spaceIndex)}
+            onClick={() => handleClick(space.id, rowIndex, spaceIndex)}
           ></div>
         ))}
       </div>

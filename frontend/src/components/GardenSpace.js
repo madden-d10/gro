@@ -12,21 +12,20 @@ function GardenSpace(props)  {
 
     if (props.space?.isUsed ) {
         return (
-            <div
-                className="space"
-                draggable={props.draggable}
-                onDragStart={props.onDragStart({ id: props.id })}
-                onDragOver={props.onDragOver({ id: props.id })}
-                onDrop={props.onDrop({ id: props.id })}
-                onClick={props.onClick}
-                style={{backgroundImage: `url('${backgroundImageURL}')`}}
-                >
-                <div className='text-container'>
-                    <p className="content">
-                        {nameWithoutBrackets}
-                    </p>
+            <div className='tooltip'>
+                <div
+                    className="space"
+                    draggable={props.draggable}
+                    onDragStart={props.onDragStart({ id: props.id })}
+                    onDragOver={props.onDragOver({ id: props.id })}
+                    onDrop={props.onDrop({ id: props.id })}
+                    onClick={props.onClick}
+                    style={{backgroundImage: `url('${backgroundImageURL}')`}}
+                    >
                 </div>
+                <span className="tooltiptext">{nameWithoutBrackets || '[Empty]'}</span>
             </div>
+
         );
     } else {
         return (
