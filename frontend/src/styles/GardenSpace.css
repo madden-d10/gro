@@ -29,6 +29,8 @@
   background-color: #032613;
 }
 
+
+/* w3schools */
 /* Tooltip container */
 .tooltip {
   position: relative;
@@ -38,9 +40,9 @@
 /* Tooltip text */
 .tooltiptext {
   visibility: hidden;
-  width: 120px;
-  background-color: #555;
-  color: #fff;
+  width: 100px;
+  background-color: rgb(85, 85, 85, 0.4);
+  color: #ffffff;
   text-align: center;
   padding: 5px 0;
   border-radius: 6px;
@@ -48,13 +50,14 @@
   /* Position the tooltip text */
   position: absolute;
   z-index: 1;
-  bottom: 125%;
+  bottom: 70%;
   left: 50%;
-  margin-left: -60px;
+  margin-left: -50px;
 
   /* Fade in tooltip */
   opacity: 0;
   transition: opacity 0.3s;
+  pointer-events:none;
 }
 
 /* Tooltip arrow */
