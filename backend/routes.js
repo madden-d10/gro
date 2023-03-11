@@ -191,7 +191,7 @@ router.put("/api/users/:username/:rowIndex/:columnIndex", jsonParser, async (req
     
     try {
       const data = await userModel.find({ username: username });
-      data[0].layout[rowIndex][columnIndex].userNotes.push(req.body);
+      data[0].layout[rowIndex][columnIndex].userNotes.push(...req.body);
 
       const newData = await userModel.updateOne(
         { username: username },
