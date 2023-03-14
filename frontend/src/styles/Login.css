@@ -2,4 +2,34 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-size: 1.2rem;
+}
+
+.login-title {
+  margin-bottom: 2rem;
+}
+
+input { 
+  font-size: 1.2rem;
+  margin: auto;
+}
+
+input[type=text] {
+  border-radius: 5px;
+  background: #ffffff;
+  box-shadow: inset 5px 5px 10px #666666,
+            inset -5px -5px 10px #ffffff;
+}
+
+input[type=password] {
+  border-radius: 5px;
+  background: #ffffff;
+  box-shadow: inset 5px 5px 10px #666666,
+            inset -5px -5px 10px #ffffff;
+}
+
+input[type=submit] {
+  background-color: #001742;
+  box-shadow:  2px 2px 4px #00091a,
+             -2px -2px 4px #00256a;
 }

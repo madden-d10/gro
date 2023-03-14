@@ -34,14 +34,13 @@ function Login () {
 
     return (
       <div className='login-form-container'>
-      <h1>Login</h1>
+      <h1 className='login-title'>Login</h1>
         <form id="login-form" onSubmit={submitLoginForm}>
-          <label>Username
+          <label for="username">Username</label>
             <input type="text" name="username" id="username" />
-          </label>
-          <label>Password
+            <br />
+          <label for="password">Password</label>
             <input type="password" name="password" id="password"/>
-          </label>
           <input type="submit" value="Login"></input>
         </form>
       </div>

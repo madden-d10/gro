@@ -1,3 +1,7 @@
+h1 {
+    margin-bottom: 0;
+}
+
 .garden-setup-container {
     display: flex;
     flex-direction: column;
@@ -7,7 +11,9 @@
 }
 
 .setup-space {
-    background-color: #444;
+    background-color: #444444;
+    box-shadow: inset 5px 5px 8px #1b1b1b,
+        inset -5px -5px 8px #6d6d6d;
     color: #fff;
     border-radius: 5px;
     font-size: 1rem;
@@ -19,15 +25,17 @@
 }
 
 .setup-space:hover {
-    background-color: #032613;
+    background-color: #598c68;
 }
 
 .selected {
-    background-color: green;
+    background-color: #032613;
+    box-shadow:  2px 2px 5px #1c211e,
+             -2px -2px 5px #686868;
 }
 
 .selected:hover {
-    background-color: rgb(0, 86, 0);
+    background-color: #032613;
 }
 
 button {

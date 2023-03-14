@@ -4,18 +4,20 @@
     align-items: center;
 }
 
-h1 {
-    color: #032613
+.garden-grid-title {
+    margin-bottom: 2rem;
 }
 
 .garden-grid {
     display: flex;
     flex-direction: column;
-    border: 10px solid #9FA6A1;
     border-radius: 5px;
-    background-color: #9FA6A1;
     width: fit-content;
     margin: auto;
+    padding: 20px;
+    background: #444444;
+    box-shadow: inset 5px 5px 10px #1b1b1b,
+            inset -5px -5px 10px #6d6d6d;
 }
 
 .row {
