@@ -11,7 +11,7 @@
   align-items: center;
 }
 
-label {
+.filter-container label {
   margin: 0 1rem;
 }
 
