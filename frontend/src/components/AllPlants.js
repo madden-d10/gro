@@ -157,11 +157,11 @@ function AllPlants(props) {
 							onClick={() => props.handlePlantSelection(plant, index)}
 						/>
 					))}
-					<div className="button-container">
+				</div>
+				<div className="button-container">
 						<button onClick={() => changePage(-44)}>Prev</button>
 						<button onClick={() => changePage(+44)}>Next</button>
 					</div>
-				</div>
 			</div>
 		)
 	}
