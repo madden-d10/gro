@@ -18,6 +18,18 @@
     cursor: pointer;
 }
 
+.setup-space:hover {
+    background-color: #032613;
+}
+
+.selected {
+    background-color: green;
+}
+
+.selected:hover {
+    background-color: rgb(0, 86, 0);
+}
+
 button {
     margin-top: 1rem;
 }

@@ -67,7 +67,7 @@ function GardenSetup(props) {
     for (let row of newLayout) {
       let spaceIndex = 0;
       for (let space of row) {
-        space.id = `${rowIndex}${spaceIndex}`;
+        space.id = `${String.fromCharCode(rowIndex + 97)}${String.fromCharCode(spaceIndex + 97)}`;
         spaceIndex++;
       }
       rowIndex++;
@@ -115,9 +115,9 @@ function GardenSetup(props) {
     setGardenLayout(newGarden);
 
     if (newGarden[rowIndex][spaceIndex].isUsed) {
-      document.getElementById(id).style.backgroundColor = "green";
+      document.getElementById(id).classList.add("selected");
     } else {
-      document.getElementById(id).style.backgroundColor = "#444";
+      document.getElementById(id).classList.remove("selected");
     }
   };
 

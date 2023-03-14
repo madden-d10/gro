@@ -48,10 +48,10 @@ function GardenGrid(props) {
 
     // switches the ids for the spaces being swapped
     if (fromIndex !== -1 && toIndex !== -1) {
-      let { id: fromId, ...fromRest } = slicedRows[parseInt(fromRowID)][parseInt(fromSpaceID)];
-      let { id: toId, ...toRest } = slicedRows[parseInt(toRowID)][parseInt(toSpaceID)];
-      slicedRows[parseInt(fromRowID)][parseInt(fromSpaceID)] = { id: fromSpace.id, ...toRest };
-      slicedRows[parseInt(toRowID)][parseInt(toSpaceID)] = { id: toSpace.id, ...fromRest };
+      let { id: fromId, ...fromRest } = slicedRows[fromRowID.charCodeAt(0) - 97][fromSpaceID.charCodeAt(0) - 97];
+      let { id: toId, ...toRest } = slicedRows[toRowID.charCodeAt(0) - 97][toSpaceID.charCodeAt(0) - 97];
+      slicedRows[fromRowID.charCodeAt(0) - 97][fromSpaceID.charCodeAt(0) - 97] = { id: fromSpace.id, ...toRest };
+      slicedRows[toRowID.charCodeAt(0) - 97][toSpaceID.charCodeAt(0) - 97] = { id: toSpace.id, ...fromRest };
 
       setUserInfo({layout: slicedRows});
       updateLayout(slicedRows)
@@ -104,7 +104,7 @@ function GardenGrid(props) {
     // put it back into the array.
     if(userLayout[rowIndex][spaceIndex] !== gardenSpace) {
       // set the state to the new copy
-      gardenSpace.id = `${rowIndex}${spaceIndex}`
+      gardenSpace.id = `${String.fromCharCode(rowIndex + 97)}${String.fromCharCode(spaceIndex + 97)}`
       gardenSpace.isUsed = true
       userLayout[rowIndex][spaceIndex] = gardenSpace;
       setUserInfo({layout: userLayout});
