@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PlantSpace from "./PlantSpace";
 import NewPlantForm from "./NewPlantForm";
-import "../styles/GardenModal.css";
+import "../styles/AllPlants.css";
 
 let allPlants = []
 
@@ -83,28 +83,39 @@ function AllPlants(props) {
 
 	const renderOptions = () => {
 		return (
-			<div className="options-container">
-				<label htmlFor="plant-group-options">Group</label>
-				<select id="plant-group-options" onChange={filterPlants}>
-					<option>-</option>
-					{groupOptions.map((groupOption, index) => (
-						<option key={index} value={groupOption}>{groupOption}</option>
-					))}
-				</select>
-				<label htmlFor="plant-lifecycle-options">Lifecycle</label>
-				<select id="plant-lifecycle-options" onChange={filterPlants}>
-					<option>-</option>
-					{lifecycleOptions.map((lifecycleOption, index) => (
-						<option key={index} value={lifecycleOption}>{lifecycleOption}</option>
-					))}
-				</select>
-				<label htmlFor="plant-uses-options">Uses</label>
-				<select id="plant-uses-options" onChange={filterPlants}>
-					<option>-</option>
-					{usesOptions.map((usesOption, index) => (
-						<option key={index} value={usesOption}>{usesOption}</option>
-					))}
-				</select>
+			<div className="filter-container">
+				<form className="searchForm">
+					<label for="search">Search
+						<input name="search" type={"text"} value={searchTerm} onChange={handleChange}></input>
+					</label>
+				</form>
+				<div className="options-container">
+				<label htmlFor="plant-group-options">Group
+					<select id="plant-group-options" onChange={filterPlants}>
+						<option>-</option>
+						{groupOptions.map((groupOption, index) => (
+							<option key={index} value={groupOption}>{groupOption}</option>
+						))}
+					</select>
+				</label>
+				<label htmlFor="plant-lifecycle-options">Lifecycle
+					<select id="plant-lifecycle-options" onChange={filterPlants}>
+						<option>-</option>
+						{lifecycleOptions.map((lifecycleOption, index) => (
+							<option key={index} value={lifecycleOption}>{lifecycleOption}</option>
+						))}
+					</select>
+				</label>
+				<label htmlFor="plant-uses-options">Uses
+					<select id="plant-uses-options" onChange={filterPlants}>
+						<option>-</option>
+						{usesOptions.map((usesOption, index) => (
+							<option key={index} value={usesOption}>{usesOption}</option>
+						))}
+					</select>
+				</label>
+				</div>
+
 			</div>
 		)
 	}
@@ -136,9 +147,6 @@ function AllPlants(props) {
 	const renderAllPlants = () => {
 		return (
 			<div>			
-				<form className="searchForm">
-					<input type={"text"} value={searchTerm} onChange={handleChange}></input>
-				</form>
 				{renderOptions()}
 				<div className="plant-container">
 					{plants?.slice(plantStartIndex, plantEndIndex).map((plant, index) => (

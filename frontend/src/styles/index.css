@@ -31,3 +31,9 @@ button {
 button:hover {
   background-color: #01266b;
 }
+
+.ReactModal__Content {
+  box-shadow: 10px 10px 30px #444;
+  background: #444444;
+  border: none;
+}
