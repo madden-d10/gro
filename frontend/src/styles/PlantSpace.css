@@ -3,11 +3,12 @@
     height: 400px;
     padding: 10px;
     margin: 10px;
-    background-color: #020D05;
+    background-color: #032613;
     color: white;
     border-radius: 5px;
     box-shadow:  2px 2px 5px #1c211e,
     -2px -2px 5px #686868;
+    transition: 0.3s;
 }
 
 .plant-item:hover {
@@ -22,4 +23,5 @@
 
 .plant-item div img {
     margin-right: 10px;
+    border-radius: 5px;
 }

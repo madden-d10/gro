@@ -84,7 +84,7 @@ function AllPlants(props) {
 	const renderOptions = () => {
 		return (
 			<div className="filter-container">
-				<form className="searchForm">
+				<form className="search-form">
 					<label for="search">Search
 						<input name="search" type={"text"} value={searchTerm} onChange={handleChange}></input>
 					</label>

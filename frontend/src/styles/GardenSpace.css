@@ -12,7 +12,8 @@
   align-items: flex-end;
   background-color: #032613;
     box-shadow:  2px 2px 5px #1c211e,
-             -2px -2px 5px #686868;
+             -2px -2px 5px #686868;       
+  transition: 0.3s;
 }
 
 .space:active {

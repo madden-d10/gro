@@ -1,7 +1,7 @@
 .ReactModal__Content {
     box-shadow: 10px 10px 30px #444;
     background: #444444  !important; 
-    border: none;
+    border: 5px solid #444444 !important;
 }
 
 .plant-container {
