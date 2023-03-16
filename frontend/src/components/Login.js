@@ -36,10 +36,10 @@ function Login () {
       <div className='login-form-container'>
       <h1 className='login-title'>Login</h1>
         <form id="login-form" onSubmit={submitLoginForm}>
-          <label for="username">Username</label>
+          <label htmlFor="username">Username</label>
             <input type="text" name="username" id="username" />
             <br />
-          <label for="password">Password</label>
+          <label htmlFor="password">Password</label>
             <input type="password" name="password" id="password"/>
           <input type="submit" value="Login"></input>
         </form>
