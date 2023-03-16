@@ -121,7 +121,7 @@ function GardenGrid(props) {
           <GardenSpace
             space={space}
             id={space.id}
-            key={space.id}
+            key={spaceIndex}
             draggable="true"
             onDragStart={handleDragStart}
             onDragOver={handleDragOver}
