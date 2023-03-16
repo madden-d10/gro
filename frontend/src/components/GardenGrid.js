@@ -7,8 +7,7 @@ function GardenGrid(props) {
   const [userInfo, setUserInfo] = useState(props.userInfo);
   const [showModal, setShowModal] = useState(false)
   const [selectedPlant, setSelectedPlant] = useState({})
-  const [rowIndex, setRowIndex] = useState(0)
-  const [spaceIndex, setSpaceIndex] = useState(0)
+  const [selectedSpace, setSelectedSpace] = useState({})
 
   const updateLayout = (newLayout) => {
     const requestOptions = {
@@ -22,36 +21,37 @@ function GardenGrid(props) {
   }
 
   const swapSpaces = (fromSpace, toSpace) => {
-    // breaks down id into the row and space sections
-    // an id of 45 will have rowID = 4 and spaceID = 5
-    const fromRowID = fromSpace.id.charAt(0)
-    const fromSpaceID = fromSpace.id.charAt(1)
-    const toRowID = toSpace.id.charAt(0)
-    const toSpaceID = toSpace.id.charAt(1)
-
     // creates a shallow copy so the state can be updated later
     let slicedRows = userInfo.layout.slice();
     let fromIndex = -1;
     let toIndex = -1;
+    let fromRowIndex = 0
+    let fromSpaceIndex = 0
+    let toRowIndex = 0
+    let toSpaceIndex = 0
 
     // finds the where the space is being moved from and where it will be dropped
     for (let i = 0; i < slicedRows.length; i++) {
       for (let j = 0; j < slicedRows[i].length; j++) {
         if (slicedRows[i][j].id === fromSpace.id) {
           fromIndex = fromSpace.id;
+          fromRowIndex = i
+          fromSpaceIndex = j
         }
         if (slicedRows[i][j].id === toSpace.id) {
           toIndex = toSpace.id;
+          toRowIndex = i
+          toSpaceIndex = j
         }
       }
     }
 
     // switches the ids for the spaces being swapped
     if (fromIndex !== -1 && toIndex !== -1) {
-      let { id: fromId, ...fromRest } = slicedRows[fromRowID.charCodeAt(0) - 97][fromSpaceID.charCodeAt(0) - 97];
-      let { id: toId, ...toRest } = slicedRows[toRowID.charCodeAt(0) - 97][toSpaceID.charCodeAt(0) - 97];
-      slicedRows[fromRowID.charCodeAt(0) - 97][fromSpaceID.charCodeAt(0) - 97] = { id: fromSpace.id, ...toRest };
-      slicedRows[toRowID.charCodeAt(0) - 97][toSpaceID.charCodeAt(0) - 97] = { id: toSpace.id, ...fromRest };
+      let { id: fromIndex, ...fromRest } = slicedRows[fromRowIndex][fromSpaceIndex];
+      let { id: toIndex, ...toRest } = slicedRows[toRowIndex][toSpaceIndex];
+      slicedRows[fromRowIndex][fromSpaceIndex] = { id: fromSpace.id, ...toRest };
+      slicedRows[toRowIndex][toSpaceIndex] = { id: toSpace.id, ...fromRest };
 
       setUserInfo({layout: slicedRows});
       updateLayout(slicedRows)
@@ -80,9 +80,8 @@ function GardenGrid(props) {
     return false;
   };
 
-  const openModal = (space, rowIndex, spaceIndex) => {
-    setRowIndex(rowIndex)
-    setSpaceIndex(spaceIndex)
+  const openModal = (space) => {
+    setSelectedSpace(space)
     setSelectedPlant(space)
     setShowModal(true);
   }
@@ -97,14 +96,30 @@ function GardenGrid(props) {
 
   const closeModal = async () => {
     let userLayout = userInfo.layout;
-    // make a shallow copy of the item
-    let gardenSpace = {...userLayout[rowIndex][spaceIndex]};
+    let gardenSpace = {}
+    let rowIndex = 0;
+    let spaceIndex = 0;
+    let i = 0;
+    let j = 0;
+    
     // replace the property
-    gardenSpace = selectedPlant;
+    gardenSpace = {id: selectedSpace.id, ...selectedPlant};
+
+    for (const row of userLayout) {
+      j = 0
+      for(const space of row) {
+        if (space.id === gardenSpace.id) {
+          rowIndex = i;
+          spaceIndex= j;
+        }
+        j++
+      }
+      i++
+    }
+
     // put it back into the array.
     if(userLayout[rowIndex][spaceIndex] !== gardenSpace) {
       // set the state to the new copy
-      gardenSpace.id = `${String.fromCharCode(rowIndex + 97)}${String.fromCharCode(spaceIndex + 97)}`
       gardenSpace.isUsed = true
       userLayout[rowIndex][spaceIndex] = gardenSpace;
       setUserInfo({layout: userLayout});
@@ -117,16 +132,16 @@ function GardenGrid(props) {
   const renderSpaces = () => {
     return userInfo.layout?.map((row, rowIndex) => (
       <div className={`row`} key={rowIndex}>
-        {row.map((space, spaceIndex) => (
+        {row.map((space) => (
           <GardenSpace
             space={space}
             id={space.id}
-            key={spaceIndex}
+            key={space.id}
             draggable="true"
             onDragStart={handleDragStart}
             onDragOver={handleDragOver}
             onDrop={handleDrop}
-            onClick={() => openModal(space, rowIndex, spaceIndex)}
+            onClick={() => openModal(space)}
           />
         ))}
       </div>
@@ -142,8 +157,6 @@ function GardenGrid(props) {
           <GardenModal
             showModal={showModal}
             selectedPlant={selectedPlant}
-            rowIndex={rowIndex}
-            spaceIndex={spaceIndex}
             closeModal={closeModal}
             clearSpace={clearSpace}
             handlePlantSelection={handlePlantSelection}>
