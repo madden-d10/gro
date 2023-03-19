@@ -29,11 +29,15 @@ h1 {
     background-color: #598c68;
 }
 
-.selected {
+.true {
     background-color: #032613;
     box-shadow:  2px 2px 5px #1c211e,
              -2px -2px 5px #686868;
 }
+/* 
+.selected:hover {
+    background-color: #032613;
+} */
 
 .selected:hover {
     background-color: #032613;

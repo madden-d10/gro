@@ -4,7 +4,6 @@ import GardenModal from './GardenModal'
 import '../styles/GardenGrid.css';
 
 function GardenGrid(props) {
-  const [userInfo, setUserInfo] = useState(props.userInfo);
   const [showModal, setShowModal] = useState(false)
   const [selectedPlant, setSelectedPlant] = useState({})
   const [selectedSpace, setSelectedSpace] = useState({})
@@ -22,7 +21,7 @@ function GardenGrid(props) {
 
   const swapSpaces = (fromSpace, toSpace) => {
     // creates a shallow copy so the state can be updated later
-    let slicedRows = userInfo.layout.slice();
+    let slicedRows = props.userInfo.layout.slice();
     let fromIndex = -1;
     let toIndex = -1;
     let fromRowIndex = 0
@@ -53,7 +52,7 @@ function GardenGrid(props) {
       slicedRows[fromRowIndex][fromSpaceIndex] = { id: fromSpace.id, ...toRest };
       slicedRows[toRowIndex][toSpaceIndex] = { id: toSpace.id, ...fromRest };
 
-      setUserInfo({layout: slicedRows});
+      props.setUserInfo({layout: slicedRows});
       updateLayout(slicedRows)
     };
   }
@@ -95,7 +94,7 @@ function GardenGrid(props) {
   }
 
   const closeModal = async () => {
-    let userLayout = userInfo.layout;
+    let userLayout = props.userInfo.layout;
     let gardenSpace = {}
     let rowIndex = 0;
     let spaceIndex = 0;
@@ -122,7 +121,7 @@ function GardenGrid(props) {
       // set the state to the new copy
       gardenSpace.isUsed = true
       userLayout[rowIndex][spaceIndex] = gardenSpace;
-      setUserInfo({layout: userLayout});
+      props.setUserInfo({layout: userLayout});
       updateLayout(userLayout)
     }
 
@@ -130,7 +129,7 @@ function GardenGrid(props) {
   }
 
   const renderSpaces = () => {
-    return userInfo.layout?.map((row, rowIndex) => (
+    return props.userInfo.layout?.map((row, rowIndex) => (
       <div className={`row`} key={rowIndex}>
         {row.map((space) => (
           <GardenSpace

@@ -1,9 +1,33 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import "../styles/GardenSetup.css";
 import newGarden from "../newGarden";
 
 function GardenSetup(props) {
-  const [gardenLayout, setGardenLayout] = useState(newGarden);
+  const [gardenLayout, setGardenLayout] = useState([]);
+
+  useEffect(() => {
+    let i = 0
+    let j = 0
+
+    if (props.isUserEditing) {
+      for (const row1 of newGarden) {
+        j = 0
+        for (const space1 of row1) {
+          for (const row2 of props.userLayout) {
+            for (const space2 of row2) {
+              if (space1.id === space2.id) {
+                newGarden[i][j] = space2
+              }
+            }
+          }
+          j++
+        }
+        i++
+      }
+    }
+
+    setGardenLayout(newGarden)
+  }, [])
 
   const getSpaceIndexes = (newLayout) => {
     let lowIndex = 0;
@@ -59,23 +83,6 @@ function GardenSetup(props) {
     return [firstRowIndex, lastRowIndex];
   };
 
-  const updateIDs = (newLayout) => {
-    let rowIndex = 0;
-
-    // because some rows have been deleted, the ids need to be reset to match the spaces posistion
-    // This allows the drag and drop function to work later on
-    for (let row of newLayout) {
-      let spaceIndex = 0;
-      for (let space of row) {
-        space.id = `${String.fromCharCode(rowIndex + 97)}${String.fromCharCode(spaceIndex + 97)}`;
-        spaceIndex++;
-      }
-      rowIndex++;
-    }
-
-    return newLayout;
-  };
-
   const updateLayout = (newLayout) => {
     const [lowIndex, highIndex] = getSpaceIndexes(newLayout);
 
@@ -97,7 +104,6 @@ function GardenSetup(props) {
     // only adds all rows which contain spaces that are being used
     // it also ensures any rows between those rows are included
     newLayout = newLayout.splice(firstRowIndex, (lastRowIndex - firstRowIndex + 1));
-    newLayout = updateIDs(newLayout);
 
     const requestOptions = {
       method: "PUT",
@@ -108,6 +114,8 @@ function GardenSetup(props) {
     fetch(`http://localhost:9000/gro/api/users/${props.username}`, requestOptions)
       .then((response) => response.json())
       .then(window.location.reload());
+
+    props.setIsUserEditing(false)
   };
 
   const handleClick = (id, rowIndex, spaceIndex) => {
@@ -115,9 +123,9 @@ function GardenSetup(props) {
     setGardenLayout(newGarden);
 
     if (newGarden[rowIndex][spaceIndex].isUsed) {
-      document.getElementById(id).classList.add("selected");
+      document.getElementById(id).classList.add("true");
     } else {
-      document.getElementById(id).classList.remove("selected");
+      document.getElementById(id).classList.remove("true");
     }
   };
 
@@ -128,7 +136,7 @@ function GardenSetup(props) {
           <div
             id={space.id}
             key={`${rowIndex}${spaceIndex}`}
-            className={"setup-space"}
+            className={`setup-space ${space.isUsed}` }
             onClick={() => handleClick(space.id, rowIndex, spaceIndex)}
           ></div>
         ))}

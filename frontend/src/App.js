@@ -8,6 +8,7 @@ let username;
   
 function App () {
   const [userInfo, setUserInfo] = useState({})
+  const [isUserEditing, setIsUserEditing] = useState(false)
  
   useEffect(() => {
     username = sessionStorage.getItem('username')
@@ -18,11 +19,16 @@ function App () {
   }, [])
 
   const renderGarden = () => {
-    if (userInfo.layout?.length > 0) {
-      return <GardenGrid userInfo={userInfo} />
+    if (!isUserEditing) {
+      return <GardenGrid userInfo={userInfo} setUserInfo={setUserInfo} />
     } else {
-      return <GardenSetup username={username}/>
+      return <GardenSetup username={username} isUserEditing={isUserEditing} userLayout={userInfo.layout} setIsUserEditing={setIsUserEditing}/>
     }
+  }
+
+  const handleEditRequest = async () => {
+    await setIsUserEditing(true);
+    // window.location.reload()
   }
 
   const handleLogoutRequest = () => {
@@ -30,11 +36,19 @@ function App () {
     window.location.reload()
   }
 
+  const renderEditButton = () => {
+    if (!isUserEditing) {
+      return (<button isUserEditing={true} onClick={handleEditRequest}>Edit</button>)
+      
+    }
+  }
+
   const renderApp = () => {
     if (username?.length > 0) {
       return (
         <div className='garden-container'>
           {renderGarden()}
+          {renderEditButton()}
           <button onClick={handleLogoutRequest}>Logout</button>
         </div>
       )
