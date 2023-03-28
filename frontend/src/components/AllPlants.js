@@ -133,7 +133,13 @@ function AllPlants(props) {
   }
 
   const handleChange = (event) => {
-    const { value } = event.target;
+		const { value } = event.target;
+
+		if (value.length <= 1) {
+			setPlantStartIndex(0); 
+			setPlantEndIndex(44)
+		}
+
 		setSearchTerm(value)
 
     if (value.length === 0) {
