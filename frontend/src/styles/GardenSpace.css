@@ -29,9 +29,10 @@
 }
 
 .space:hover {
-  background-color: #598c68;;
+  background-color: #598c68;
+  box-shadow:  6px 6px 5px #1c211e,
+    -4px -4px 5px #686868;   
 }
-
 
 /* w3schools */
 /* Tooltip container */
