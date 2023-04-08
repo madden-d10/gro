@@ -20,10 +20,10 @@ function SelectedPlant(props) {
         }
       }
     })
-  }, [userNotes])
+  }, [])
 
   const renderUserNotes = () => {
-    return userNotes.map((note, rowIndex) => (
+    return userNotes?.map((note, rowIndex) => (
       <p className={`user-note`} key={rowIndex}>
         {note}
       </p>
@@ -33,7 +33,7 @@ function SelectedPlant(props) {
   return (
     <div>
         <div className="single-plant-container">
-					<PlantSpace plant={props.selectedPlant} />
+					<PlantSpace plant={props.selectedPlant} isSelectedPlant={true} />
 					<button onClick={props.clearSpace}>Clear</button>
 				</div>
 				<div className="user-notes-container">

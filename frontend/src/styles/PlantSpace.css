@@ -25,3 +25,17 @@
     margin-right: 10px;
     border-radius: 5px;
 }
+
+.true {
+    width: 600px; 
+    height: fit-content;
+}
+
+.true:hover {
+    cursor: default;
+    background-color: #032613;
+}
+
+hr {
+    width: 100%;
+}

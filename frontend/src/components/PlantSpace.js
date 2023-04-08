@@ -1,6 +1,9 @@
 import React from 'react';
 import '../styles/PlantSpace.css'
 
+const plantInfo = ["group", "lifecycle", "flowerTime", "sunRequirements", "uses"]
+const extraPlantInfo = ["group", "lifecycle", "flowerTime", "sunRequirements", "uses", "containers", "leaves", "wildlifeAttractant", "spread", "plantHeight"]
+
 function PlantSpace(props)  {
     let imageURL = ''
 
@@ -8,18 +11,30 @@ function PlantSpace(props)  {
         imageURL = `/images/${props.plant?.name.replace(/'/g, "")}/0 ${props.plant?.name.replace(/'/g, "")}.jpg`
     }
 
+    const renderPlantInfo = () => {
+        let arr = plantInfo
+        if (props.isSelectedPlant) {
+            arr = extraPlantInfo
+        }
+
+        return arr.map((info, index) => {
+			const result = info.replace(/([A-Z])/g, " $1");
+			const label = result.charAt(0).toUpperCase() + result.slice(1);
+		
+			return (
+                <p key={index}><b>{label} </b>{props.plant[info]}</p>
+			)
+		})
+    }
+
     return (
-        <div id={`plant-${props.index}`} className="plant-item" onClick={props.onClick}>
+        <div id={`plant-${props.index}`} className={`plant-item ${props.isSelectedPlant}`} onClick={props.onClick}>
             <div>
                 <img src={`${imageURL}`} />
                 <p>{props.plant.name}</p> 
             </div>
             <hr />
-            <p><b>Group: </b>{props.plant.group}</p>
-            <p><b>Lifecycle: </b>{props.plant.lifecycle}</p>
-            <p><b>Flower Time: </b>{props.plant.flowerTime}</p>
-            <p><b>Sun Requirements: </b>{props.plant.sunRequirements}</p>
-            <p><b>Uses: </b>{props.plant.uses}</p>
+            {renderPlantInfo()}
         </div>
     );
 }
