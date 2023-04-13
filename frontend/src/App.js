@@ -38,8 +38,7 @@ function App () {
 
   const renderEditButton = () => {
     if (!isUserEditing) {
-      return (<button onClick={handleEditRequest}>Edit</button>)
-      
+      return <button onClick={handleEditRequest}>Edit</button>
     }
   }
 

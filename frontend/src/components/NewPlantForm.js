@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/newPlantForm.css"
 
 const formFields = ["name", "group", "lifecycle", "flowerTime", "sunRequirements", "uses", "plantHeight",  
 	"wildlifeAttractant", "leaves", "spread", "miscellaneous"]
 
 function NewPlantForm() {
+	const [errorText, setErrorText] = useState('')
   const createNewPlant = (newPlantObj, formData) => {
     const newPlantRequestOptions = {
       method: 'POST',
@@ -27,22 +28,24 @@ function NewPlantForm() {
 	const checkFormValdity = () => {
 		for (const field of formFields) {
 			if ((field === "name" && document.forms[0]["name"].value === "") || (field === "group" && document.forms[0]["group"].value === "")) {
-					document.querySelector(`#${field}`).classList.add('error')
-					alert("Required fields: name and group")
-					return false
-				}
-				
-				document.querySelector(`#${field}`).classList.remove('error')
-			}
-			
-			if (!document.forms[0]["image"].value.toLowerCase().endsWith(".png") && !document.forms[0]["image"].value.toLowerCase().endsWith(".jpg")) {
-				document.querySelector("#image").classList.add('error')
-				alert("Invalid image format")
+				document.querySelector(`#${field}`).classList.add('error')
+				setErrorText("Required fields: name and group")
+				document.querySelector(`.error-text`).classList.remove('hide')
 				return false
 			}
+				
+			document.querySelector(`#${field}`).classList.remove('error')
+		}
 			
-			document.querySelector("#image").classList.remove('error')
-			return true
+		if (!document.forms[0]["image"].value.toLowerCase().endsWith(".png") && !document.forms[0]["image"].value.toLowerCase().endsWith(".jpg")) {
+			document.querySelector("#image").classList.add('error')
+			setErrorText("Invalid image format")
+			document.querySelector(`.error-text`).classList.remove('hide')
+			return false
+		}
+		
+		document.querySelector("#image").classList.remove('error')
+		return true
 	}
 
 	const handleSubmit = (event) => {
@@ -97,7 +100,8 @@ function NewPlantForm() {
 				{renderFormFields()}
 				<label htmlFor="image">Plant Image*<br/>
 					<input type="file" id="image" name="image" accept="image/png, image/jpeg" />
-				</label>	
+				</label>
+				<p className='error-text hide' ><i>{errorText}</i></p>
 				<input type="submit" value="Submit" className="button" />
 			</form> 
 		</div>

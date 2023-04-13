@@ -41,4 +41,5 @@ input[type="submit"]:hover {
 
 .error {
   border: 2px solid red;
+  border-radius: 0.2rem;
 }
