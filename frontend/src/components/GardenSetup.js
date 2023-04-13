@@ -10,13 +10,13 @@ function GardenSetup(props) {
     let j = 0
 
     if (props.isUserEditing) {
-      for (const row1 of newGarden) {
+      for (const newGardenRow of newGarden) {
         j = 0
-        for (const space1 of row1) {
-          for (const row2 of props.userLayout) {
-            for (const space2 of row2) {
-              if (space1.id === space2.id) {
-                newGarden[i][j] = space2
+        for (const newGardenSpace of newGardenRow) {
+          for (const userLayoutRow of props.userInfo.layout) {
+            for (const userLayoutSpace of userLayoutRow) {
+              if (newGardenSpace.id === userLayoutSpace.id) {
+                newGarden[i][j] = userLayoutSpace
               }
             }
           }
