@@ -22,13 +22,16 @@ function App () {
     if (!isUserEditing) {
       return <GardenGrid userInfo={userInfo} setUserInfo={setUserInfo} />
     } else {
-      return <GardenSetup username={username} isUserEditing={isUserEditing} userLayout={userInfo.layout} setIsUserEditing={setIsUserEditing}/>
+      return <GardenSetup username={username} 
+        isUserEditing={isUserEditing} 
+        setIsUserEditing={setIsUserEditing} 
+        userInfo={userInfo}
+        />
     }
   }
 
   const handleEditRequest = async () => {
     await setIsUserEditing(true);
-    // window.location.reload()
   }
 
   const handleLogoutRequest = () => {
