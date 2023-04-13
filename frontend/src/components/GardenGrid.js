@@ -7,6 +7,7 @@ function GardenGrid(props) {
   const [showModal, setShowModal] = useState(false)
   const [selectedPlant, setSelectedPlant] = useState({})
   const [selectedSpace, setSelectedSpace] = useState({})
+  const username = sessionStorage.getItem('username');
 
   const updateLayout = (newLayout) => {
     const requestOptions = {
@@ -149,7 +150,7 @@ function GardenGrid(props) {
 
   return (
     <div className="garden-grid-container">
-      <h1 className='garden-grid-title'>Your Garden</h1>
+      <h1 className='garden-grid-title'>{username}'s Garden</h1>
       <div className="garden-grid">
         {renderSpaces()}
         <div>
