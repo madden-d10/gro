@@ -64,7 +64,9 @@ router.post("/api/plants", jsonParser, async (req, res) => {
     fruit: req.body.fruit,
     miscellaneous: req.body.miscellaneous,
     userNotes: [],
+    createdBy: req.body.username,
   });
+  console.log(req.body.username)
 
 	const path = '../gro/frontend/public/images/' + req.body.name;
 
@@ -214,8 +216,19 @@ router.put("/api/plants/:id", async (req, res) => {
 });
 
 // Delete by ID Method
-router.delete("/api/plants/:id", (req, res) => {
-  res.send("Delete by ID API");
+router.delete("/api/plants/:id/:username/:name", async (req, res) => { 
+  const id = req.params.id;
+  const username = req.params.username;
+  const name = req.params.name;
+  const path =`../gro/frontend/public/images/${name}/`;
+
+  try {
+    await plantModel.findByIdAndDelete({ _id: id, createdBy: username });
+    fs.rmSync(path, { recursive: true, force: true });
+    res.json("Deleted plant");
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 
 // Get tips

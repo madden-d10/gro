@@ -30,11 +30,34 @@ function SelectedPlant(props) {
     ));
   };
 
+  const deletePlant = () => {
+    const username = sessionStorage.getItem('username')
+    const deleteRequestOptions = {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' }
+    };
+
+    fetch(`http://localhost:9000/gro/api/plants/${props.selectedPlant._id}/${username}/${props.selectedPlant.name}`, 
+    deleteRequestOptions)
+      .then(response => response.json())
+    
+    props.clearSpace();
+  }
+
+  const renderDeleteButton = () => {
+    const username = sessionStorage.getItem('username')
+
+    if (props.selectedPlant.createdBy === username) {
+      return <button className="delete-button" onClick={deletePlant}>Delete</button>
+    }
+  }
+
   return (
     <div>
         <div className="single-plant-container">
 					<PlantSpace plant={props.selectedPlant} isSelectedPlant={true} />
 					<button onClick={props.clearSpace}>Clear</button>
+          {renderDeleteButton()}
 				</div>
 				<div className="user-notes-container">
 					<h2>User Notes:</h2>

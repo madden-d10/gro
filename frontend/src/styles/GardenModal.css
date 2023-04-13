@@ -26,3 +26,11 @@ button {
 .close-button {
     margin: 10px 0;
 }
+
+.delete-button {
+    background-color: rgb(192, 2, 2);
+}
+
+.delete-button:hover {
+    background-color: red;
+}

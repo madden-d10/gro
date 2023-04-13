@@ -26,6 +26,7 @@ const plantSchema = new mongoose.Schema({
     plantHeight: { type: String },
     fruit: { type: String },
     userNotes: { type: Array },
+    createdBy: { type: String },
 })
 
 module.exports = mongoose.model('plants', plantSchema)

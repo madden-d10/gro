@@ -6,7 +6,7 @@ const formFields = ["name", "group", "lifecycle", "flowerTime", "sunRequirements
 
 function NewPlantForm() {
 	const [errorText, setErrorText] = useState('')
-  const createNewPlant = (newPlantObj, formData) => {
+  const createNewPlant = async (newPlantObj, formData) => {
     const newPlantRequestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -18,11 +18,13 @@ function NewPlantForm() {
       body: formData
     };
 
-    fetch('http://localhost:9000/gro/api/plants', newPlantRequestOptions)
+    await fetch('http://localhost:9000/gro/api/plants', newPlantRequestOptions)
       .then(response => response.json())
 
-		fetch('http://localhost:9000/gro/api/plants/image', newImageRequestOptions)
+		await fetch('http://localhost:9000/gro/api/plants/image', newImageRequestOptions)
 			.then(response => response.json())
+		
+		window.location.reload()
   }
 
 	const checkFormValdity = () => {
@@ -51,6 +53,9 @@ function NewPlantForm() {
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		const isFormValid = checkFormValdity();
+		const formData = new FormData()
+		const imageInput = document.querySelector('#image')
+		const username = sessionStorage.getItem('username');
 
 		if (!isFormValid) {
 			return
@@ -61,15 +66,15 @@ function NewPlantForm() {
 			newPlantObj[field] = event.target[field].value || ""
 		}
 
-		const formData = new FormData()
-		const imageInput = document.querySelector('#image')
 		formData.append('image', imageInput.files[0])
 		formData.append('name', event.target.name.value)
+		newPlantObj.username = username
 		createNewPlant(newPlantObj, formData)
 
 		for (const field of formFields) {
 			event.target[field].value = ""
 		}
+
 	}
 
 	const renderFormFields = () => {
