@@ -5,7 +5,7 @@ import Login from './components/Login'
 import './styles/App.css'
 
 let username;
-  
+
 function App () {
   const [userInfo, setUserInfo] = useState({})
   const [isUserEditing, setIsUserEditing] = useState(false)
@@ -22,9 +22,9 @@ function App () {
     if (!isUserEditing) {
       return <GardenGrid userInfo={userInfo} setUserInfo={setUserInfo} />
     } else {
-      return <GardenSetup username={username} 
-        isUserEditing={isUserEditing} 
-        setIsUserEditing={setIsUserEditing} 
+      return <GardenSetup 
+        username={username} 
+        isUserEditing={isUserEditing}
         userInfo={userInfo}
         />
     }

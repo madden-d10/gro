@@ -114,8 +114,6 @@ function GardenSetup(props) {
     fetch(`http://localhost:9000/gro/api/users/${props.username}`, requestOptions)
       .then((response) => response.json())
       .then(window.location.reload());
-
-    props.setIsUserEditing(false)
   };
 
   const handleClick = (id, rowIndex, spaceIndex) => {
