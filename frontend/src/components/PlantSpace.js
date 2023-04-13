@@ -2,7 +2,8 @@ import React from 'react';
 import '../styles/PlantSpace.css'
 
 const plantInfo = ["group", "lifecycle", "flowerTime", "sunRequirements", "uses"]
-const extraPlantInfo = ["group", "lifecycle", "flowerTime", "sunRequirements", "uses", "containers", "leaves", "wildlifeAttractant", "spread", "plantHeight"]
+const extraPlantInfo = ["group", "lifecycle", "flowerTime", "sunRequirements", "uses", "containers", 
+    "leaves", "wildlifeAttractant", "spread", "plantHeight", "miscellaneous"]
 
 function PlantSpace(props)  {
     let imageURL = ''

@@ -1,9 +1,8 @@
 import React from "react";
 import "../styles/newPlantForm.css"
 
-const formFields = ["name", "group", "lifecycle", "flowerTime", "sunRequirements","uses", "looks", 
-	"color", "plantHeight", "inflorescenceHeight", "wildlifeAttractant", "suitableLocations", "plantHabit",
-	"leaves", "resistances", "soil ph", "spread", "parentage", "childPlants", "fruit", "miscellaneous"]
+const formFields = ["name", "group", "lifecycle", "flowerTime", "sunRequirements", "uses", "plantHeight",  
+	"wildlifeAttractant", "leaves", "spread", "miscellaneous"]
 
 function NewPlantForm() {
   const createNewPlant = (newPlantObj, formData) => {
