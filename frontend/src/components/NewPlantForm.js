@@ -84,6 +84,14 @@ function NewPlantForm() {
 					</label>
 				)
 			}
+
+			if (field === "miscellaneous") {
+				return (
+					<label key={index} htmlFor={field}>{label}<br/>
+						<textarea id={field} name={field} type="text" />
+					</label>
+				)
+			}
 		
 			return (
 				<label key={index} htmlFor={field}>{label}<br/>
