@@ -10,6 +10,12 @@ function GardenSpace(props)  {
         backgroundImageURL = `/images/${props.space.name.replace(/'/g, "")}/0 ${props.space.name.replace(/'/g, "")}.jpg`
     }
 
+    const renderToolTipText = () => {
+        if (nameWithoutBrackets?.length > 0) {
+            return <span className="tooltiptext">{nameWithoutBrackets || '[Empty]'}</span>
+        }
+    }
+
     if (props.space?.isUsed ) {
         return (
             <div className='tooltip'>
@@ -23,7 +29,7 @@ function GardenSpace(props)  {
                     style={{backgroundImage: `url('${backgroundImageURL}')`}}
                     >
                 </div>
-                <span className="tooltiptext">{nameWithoutBrackets || '[Empty]'}</span>
+                {renderToolTipText()}
             </div>
 
         );
