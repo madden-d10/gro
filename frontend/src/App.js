@@ -4,14 +4,13 @@ import GardenSetup from './components/GardenSetup';
 import Login from './components/Login'
 import './styles/App.css'
 
-let username;
+const username =sessionStorage.getItem('username')
 
 function App () {
   const [userInfo, setUserInfo] = useState({})
   const [isUserEditing, setIsUserEditing] = useState(false)
  
   useEffect(() => {
-    username = sessionStorage.getItem('username')
 
     fetch(`http://localhost:9000/gro/api/users/${username}`)
     .then(response => response.json())
@@ -54,9 +53,7 @@ function App () {
           <button onClick={handleLogoutRequest}>Logout</button>
         </div>
       )
-    }
-    
-    if (username?.length <= 0) {
+    } else {
       return <Login />
     }
   }
