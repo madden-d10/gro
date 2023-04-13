@@ -54,7 +54,9 @@ function App () {
           <button onClick={handleLogoutRequest}>Logout</button>
         </div>
       )
-    } else {
+    }
+    
+    if (username?.length <= 0) {
       return <Login />
     }
   }
