@@ -124,7 +124,7 @@ function Tips(props) {
 
   return (
     <div id="information-wrapper">
-      <h2>Find further Information</h2>
+      <h3>Find further Information</h3>
       <p>
         Data taken from <i>www.gardenersworld.com</i> and <i>www.rhs.org.uk</i>
       </p>

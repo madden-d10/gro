@@ -60,7 +60,9 @@ function SelectedPlant(props) {
           {renderDeleteButton()}
 				</div>
 				<div className="user-notes-container">
-					<h2>User Notes:</h2>
+        <br />
+        <hr />
+					<h2>User Notes</h2>
 					{renderUserNotes(userNotes)}
         </div>
         <Tips selectedPlant={props.selectedPlant} userNotes={userNotes} setUserNotes={setUserNotes}/>
