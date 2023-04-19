@@ -40,7 +40,7 @@ function App () {
   }
 
   const renderEditButton = () => {
-    if (!isUserEditing) {
+    if (!isUserEditing && userInfo.layout?.length > 0) {
       return <button onClick={handleEditRequest}>Edit</button>
     }
   }
