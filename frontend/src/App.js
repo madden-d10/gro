@@ -18,14 +18,15 @@ function App () {
   }, [])
 
   const renderGarden = () => {
-    if (!isUserEditing) {
-      return <GardenGrid userInfo={userInfo} setUserInfo={setUserInfo} />
-    } else {
+    console.log(userInfo.layout?.length)
+    if ((!isUserEditing && userInfo.layout?.length === 0) || (isUserEditing && userInfo.layout?.length > 0)) {
       return <GardenSetup 
-        username={username} 
-        isUserEditing={isUserEditing}
-        userInfo={userInfo}
-        />
+      username={username} 
+      isUserEditing={isUserEditing}
+      userInfo={userInfo}
+      />
+    } else {
+      return <GardenGrid userInfo={userInfo} setUserInfo={setUserInfo} />
     }
   }
 
