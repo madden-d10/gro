@@ -18,7 +18,6 @@ function App () {
   }, [])
 
   const renderGarden = () => {
-    console.log(userInfo.layout?.length)
     if ((!isUserEditing && userInfo.layout?.length === 0) || (isUserEditing && userInfo.layout?.length > 0)) {
       return <GardenSetup 
       username={username} 
