@@ -192,7 +192,6 @@ router.put("/api/users/:username/:rowIndex/:columnIndex", jsonParser, async (req
     try {
       const rI = req.params.rowIndex;
       const cI = req.params.columnIndex;
-      console.log(rI, cI)
       const newData = await userModel.updateOne(
         { username: username },
         { [`layout.${parseInt(rI)}.${parseInt(cI)}.userNotes`]: req.body }
