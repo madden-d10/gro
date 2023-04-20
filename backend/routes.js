@@ -188,15 +188,14 @@ router.put("/api/users/:username", jsonParser, async (req, res) => {
 // Update user notes in plant in user layout
 router.put("/api/users/:username/:rowIndex/:columnIndex", jsonParser, async (req, res) => {
     const username = req.params.username;
-    const indexes = req.params.rowIndex + req.params.columnIndex ;
     
     try {
-      const data = await userModel.find({ username: username });
-      data[0].layout[indexes.charCodeAt(0)-97][indexes.charCodeAt(1)-97].userNotes.push(...req.body);
-
+      const rI = req.params.rowIndex;
+      const cI = req.params.columnIndex;
+      console.log(rI, cI)
       const newData = await userModel.updateOne(
         { username: username },
-        { layout: data[0].layout }
+        { [`layout.${parseInt(rI)}.${parseInt(cI)}.userNotes`]: req.body }
       );
       res.json(newData);
     } catch (error) {

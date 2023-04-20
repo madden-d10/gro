@@ -5,19 +5,28 @@ import "../styles/GardenModal.css";
 
 function SelectedPlant(props) {
   const [userNotes, setUserNotes] = useState([])
+  const [rowIndex, setRowIndex] = useState()
+  const [columnIndex, setColumnIndex] = useState(0)
 
   useEffect(() => {
     const username = sessionStorage.getItem('username')
+    let i = 0;
+    let j = 0;
 
     fetch(`http://localhost:9000/gro/api/users/${username}`)
     .then(response => response.json())
     .then(response => {
       for (const row of response[0]?.layout) {
+        i++
         for (const space of row) {
+          j++
           if (space.id === props.selectedPlant.id) {
             setUserNotes(space.userNotes)
+            setRowIndex(i - 1)
+            setColumnIndex(j -1)
           }
         }
+        j = 0
       }
     })
   }, [])
@@ -65,7 +74,7 @@ function SelectedPlant(props) {
 					<h2>User Notes</h2>
 					{renderUserNotes(userNotes)}
         </div>
-        <Tips selectedPlant={props.selectedPlant} userNotes={userNotes} setUserNotes={setUserNotes}/>
+        <Tips rowIndex={rowIndex} columnIndex={columnIndex} userNotes={userNotes} setUserNotes={setUserNotes}/>
     </div>
   );
 }

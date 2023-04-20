@@ -71,6 +71,7 @@ function Tips(props) {
 
   const addSelectedInformation = () => {
     const userInfo = [];
+    const username =sessionStorage.getItem('username')
     selectedInformation.forEach((item) => userInfo.push(item.info));
 
     const requestOptions = {
@@ -79,7 +80,7 @@ function Tips(props) {
       body: JSON.stringify(userInfo),
     };
 
-    fetch(`http://localhost:9000/gro/api/users/user2/${props.selectedPlant.id.charAt(0)}/${props.selectedPlant.id.charAt(1)}`, requestOptions)
+    fetch(`http://localhost:9000/gro/api/users/${username}/${props.rowIndex}/${props.columnIndex}`, requestOptions)
     .then((response) => response.json());
 
     props.setUserNotes([props.userNotes, ...userInfo])
