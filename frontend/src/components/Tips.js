@@ -90,7 +90,7 @@ function Tips(props) {
     fetch(`http://localhost:9000/gro/api/users/${username}/${props.rowIndex}/${props.columnIndex}`, requestOptions)
     .then((response) => response.json());
 
-    props.setUserNotes([...userInfo])
+    props.setUserNotes(userInfo)
     setReturnedInformation([])
     setSearchTerm('')
   };
