@@ -3,6 +3,8 @@ import gardenersWorldLinks from "../gardenersWorldLinks";
 import rhsGrowingGuideLinks from "../rhsGrowingGuideLinks";
 import "../styles/Tips.css";
 
+import PulseLoader from "react-spinners/PulseLoader";
+
 let allLinks = [];
 
 for (const link of gardenersWorldLinks ) {
@@ -18,6 +20,7 @@ function Tips(props) {
   const [searchTerm, setSearchTerm] = useState("");
   const [returnedInformation, setReturnedInformation] = useState([]);
   const [selectedInformation, setSelectedInformation] = useState([]);
+  const [loading, setLoading] = useState(false)
 
   const getMatchingLinks = (value) => {
     const matchingLinks = []
@@ -62,16 +65,20 @@ function Tips(props) {
 
   const getFurtherInformation = (link) => {
     const endOfURL = encodeURIComponent(link.text);
+    setReturnedInformation([])
+    setLoading(true)
+    setLinks([])
 
     fetch(`http://localhost:9000/gro/api/tips/${link.website}/${endOfURL}`)
     .then((res) => res.json())
     .then((res) => setReturnedInformation(res))
+    .then(() => setLoading(false))
     .catch((err) => err);
   };
 
   const addSelectedInformation = () => {
     const userInfo = [];
-    const username =sessionStorage.getItem('username')
+    const username = sessionStorage.getItem('username')
     selectedInformation.forEach((item) => userInfo.push(item.info));
 
     const requestOptions = {
@@ -83,7 +90,9 @@ function Tips(props) {
     fetch(`http://localhost:9000/gro/api/users/${username}/${props.rowIndex}/${props.columnIndex}`, requestOptions)
     .then((response) => response.json());
 
-    props.setUserNotes([props.userNotes, ...userInfo])
+    props.setUserNotes([...userInfo])
+    setReturnedInformation([])
+    setSearchTerm('')
   };
 
   const renderReturnedInformation = () => {
@@ -125,15 +134,22 @@ function Tips(props) {
 
   return (
     <div id="information-wrapper">
-      <h3>Find further Information</h3>
+      <h2>Find Tips</h2>
       <p>
         Data taken from <i>www.gardenersworld.com</i> and <i>www.rhs.org.uk</i>
       </p>
       <form className="searchForm">
         <input type={"text"} value={searchTerm} onChange={handleChange}></input>
       </form>
-      {renderReturnedInformation()}
       <div className="search-results-container">{renderLinks()}</div>
+      <br/>
+      <PulseLoader
+        loading={loading}
+        size={20}
+        aria-label="Loading Spinner"
+        data-testid="loader"
+      />
+      {renderReturnedInformation()}
     </div>
   );
 }

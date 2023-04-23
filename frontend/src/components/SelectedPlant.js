@@ -16,16 +16,16 @@ function SelectedPlant(props) {
     fetch(`http://localhost:9000/gro/api/users/${username}`)
     .then(response => response.json())
     .then(response => {
-      for (const row of response[0]?.layout) {
-        i++
+      for (const row of response[0]?.layout) {       
         for (const space of row) {
-          j++
           if (space.id === props.selectedPlant.id) {
             setUserNotes(space.userNotes)
-            setRowIndex(i - 1)
-            setColumnIndex(j -1)
+            setRowIndex(i)
+            setColumnIndex(j)
           }
+          j++
         }
+        i++
         j = 0
       }
     })
