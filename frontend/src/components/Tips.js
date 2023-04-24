@@ -144,6 +144,7 @@ function Tips(props) {
       <div className="search-results-container">{renderLinks()}</div>
       <br/>
       <PulseLoader
+        color={"white"}
         loading={loading}
         size={20}
         aria-label="Loading Spinner"

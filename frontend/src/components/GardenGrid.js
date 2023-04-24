@@ -150,7 +150,7 @@ function GardenGrid(props) {
 
   return (
     <div className="garden-grid-container">
-      <h1 className='garden-grid-title'>{username}'s Garden</h1>
+      <h2 className='garden-grid-title'>{username}'s Garden</h2>
       <div className="garden-grid">
         {renderSpaces()}
         <div>

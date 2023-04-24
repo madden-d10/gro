@@ -23,7 +23,7 @@ function PlantSpace(props)  {
 			const label = result.charAt(0).toUpperCase() + result.slice(1);
 		
 			return (
-                <p key={index}><b>{label} </b>{props.plant[info]}</p>
+                <p key={index}><b>{label}: </b>{props.plant[info]}</p>
 			)
 		})
     }

@@ -144,7 +144,7 @@ function GardenSetup(props) {
 
   return (
     <div className="garden-setup-container">
-      <h1>Garden Setup</h1>
+      <h2>Garden Setup</h2>
       <p>(<i>Each square represents a 50cm x 50cm area</i>)</p>
       {renderSpaces()}
       <button onClick={() => updateLayout(gardenLayout)}>Create</button>

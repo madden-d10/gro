@@ -29,8 +29,18 @@ button {
   transition: 0.3s;
 }
 
+button:active {
+  box-shadow:  inset 2px 2px 4px #011b4d,
+  inset -2px -2px 4px #0143bd;
+}
+
 button:hover {
   background-color: #012f85;
+}
+
+input[type=submit]:active {
+  box-shadow:  inset 2px 2px 4px #011b4d,
+  inset -2px -2px 4px #0143bd;
 }
 
 .ReactModal__Content {

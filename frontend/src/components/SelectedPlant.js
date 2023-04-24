@@ -69,10 +69,12 @@ function SelectedPlant(props) {
           {renderDeleteButton()}
 				</div>
 				<div className="user-notes-container">
-        <br />
-        <hr />
-					<h2>User Notes</h2>
-					{renderUserNotes(userNotes)}
+          <br />
+          <hr />
+          <h2>User Notes</h2>
+					{renderUserNotes(userNotes)} 
+          <br />
+          <hr />
         </div>
         <Tips rowIndex={rowIndex} columnIndex={columnIndex} userNotes={userNotes} setUserNotes={setUserNotes}/>
     </div>
