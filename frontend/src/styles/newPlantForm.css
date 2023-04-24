@@ -15,12 +15,14 @@ form {
   flex-direction: column;
 }
 
-label {
+.new-plant-form label {
   padding: 0.5rem 0;
+  width: 100%;
 }
 
-input {
-  margin-left: 1rem;
+.new-plant-form input {
+  margin: 0.5rem 0;
+  width: 100%;
 }
 
 input[type="submit"] {
@@ -39,10 +41,6 @@ input[type="submit"]:hover {
   background-color: #01266b;
 }
 
-label[for=miscellaneous] {
-  width: 249px;
-}
-
 textarea[type=text] {
   border-radius: 5px;
   background: #ffffff;
@@ -53,8 +51,8 @@ textarea[type=text] {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
   'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
   sans-serif;
+  margin: 0.5rem 0;
 }
-
 
 .error {
   border: 2px solid red;
