@@ -5,7 +5,7 @@ import "../styles/GardenModal.css";
 
 function SelectedPlant(props) {
   const [userNotes, setUserNotes] = useState([])
-  const [rowIndex, setRowIndex] = useState()
+  const [rowIndex, setRowIndex] = useState(0)
   const [columnIndex, setColumnIndex] = useState(0)
 
   useEffect(() => {
