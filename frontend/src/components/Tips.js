@@ -54,10 +54,10 @@ function Tips(props) {
     return links.map((link, index) => (
       <div key={index} className="search-result">
         <span>(<i>{link.website}</i>)</span>
-        <a href={link.text}>
+        <span href={link.text}>
           {link.text.replace("how-to/", "").replace("grow-plants/", "").replace("/growing-guide", "")
           .replace("plants/", "").replace("types/", "").replace("/", " ").replaceAll("-", " ")}
-        </a>
+        </span>
         <button onClick={() => getFurtherInformation(link)}>Get Tips</button>
       </div>
     ));

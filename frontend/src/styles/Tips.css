@@ -22,9 +22,8 @@
     text-align: center;
 }
 
-a {
+span {
     margin: 10px;
-    color: #598c68;
 }
 
 .returned-information:hover {
