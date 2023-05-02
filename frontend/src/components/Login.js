@@ -36,7 +36,7 @@ function Login () {
 
     return (
       <div className='login-form-container'>
-      <h1><img src='/largeLogo.jpg' alt='application logo'></img> Gro</h1>
+      <h1><img src='/largeLogo.jpg' alt='application logo'></img>Gro</h1>
       <h2 className='login-title'>Login</h2>
         <form id="login-form" onSubmit={submitLoginForm}>
           <label htmlFor="username">Username</label>
