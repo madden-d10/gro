@@ -31,7 +31,7 @@ function PlantSpace(props)  {
     return (
         <div id={`plant-${props.index}`} className={`plant-item ${props.isSelectedPlant}`} onClick={props.onClick}>
             <div>
-                <img src={`${imageURL}`} />
+                <img src={`${imageURL}`} alt='plant image'/>
                 <p>{props.plant.name}</p> 
             </div>
             <hr />
