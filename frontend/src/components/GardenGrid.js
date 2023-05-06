@@ -10,13 +10,15 @@ function GardenGrid(props) {
   const username = sessionStorage.getItem('username');
 
   const updateLayout = (newLayout) => {
+  const username = sessionStorage.getItem('username');
+
     const requestOptions = {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newLayout)
     };
 
-    fetch(`http://localhost:9000/gro/api/users/${props.userInfo.username}`, requestOptions)
+    fetch(`http://localhost:9000/gro/api/users/${username}`, requestOptions)
       .then(response => response.json())
   }
 
