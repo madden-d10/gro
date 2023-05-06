@@ -68,7 +68,7 @@ router.post("/api/plants", jsonParser, async (req, res) => {
   });
   console.log(req.body.username)
 
-	const path = '../gro/frontend/public/images/' + req.body.name;
+	const path = '../frontend/public/images/' + req.body.name;
 
 	fs.access(path, (error) => {
 		// To check if the given directory 
@@ -99,7 +99,7 @@ router.post("/api/plants", jsonParser, async (req, res) => {
 // Upload new image
 router.post("/api/plants/image", fileupload(), async (req, res) => {
 	const name = req.body.name
-  const path = `../gro/frontend/public/images/${name}/0 ${name}.jpg`
+  const path = `../frontend/public/images/${name}/0 ${name}.jpg`
 
   req.files.image.mv(path, (error) => {
     if (error) {
